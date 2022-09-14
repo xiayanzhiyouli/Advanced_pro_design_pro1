@@ -5,6 +5,7 @@
 #include<iostream>
 #include <cstring>
 #include <string.h>
+#include <iomanip>
 //#include <string>
 using namespace std;
 
@@ -36,7 +37,21 @@ public:
 	void Set_password(char* str);	
 	bool Set_balance(double balance);
 	void Set_state(UserState us);
+	void PrintAll();
 	
+	friend ostream& operator << (ostream& os, const User us)
+	{
+		os << us.user_id << "  " << us.user_name << " " <<us.user_tele
+		<< " " << us.user_addr << " "<<us.user_balance;
+
+		if(us.user_state == ACTIVE)
+			os << "  ACTIVE"<<endl;
+		else
+			os << "  INACTIVE"<<endl;
+
+		return os;
+	};
+
 private:
 	string user_id;
 	string user_name;

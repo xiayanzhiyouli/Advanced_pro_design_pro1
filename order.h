@@ -5,6 +5,7 @@
 #include<iostream>
 #include <cstring>
 #include<string.h>
+#include <iomanip>
 //#include <string>
 using namespace std;
 
@@ -43,9 +44,17 @@ public:
 	bool Set_com_id(char* str);
 	bool Set_price(double price);
 	bool Set_num(int num);
-	bool Set_order_date(OrderDate od);
+	bool Set_order_date(int y,int m,int d);
 	bool Set_seller_id(char* str);
 	bool Set_buyer_id(char* str);
+	void PrintAll();
+
+	friend ostream& operator << (ostream& os, const Order od)
+	{
+		return os << od.order_id << "  " << od.order_com_id << setw(10) << od.order_price << setw(5) 
+		<< od.order_num << " "<<od.order_date.year << "-"<< od.order_date.month <<"-"<<od.order_date.day<<" "
+		<< od.order_seller_id << " "<< od.order_buyer_id <<endl;
+	};
 	
 private:
 	string order_id;//T001
@@ -54,7 +63,7 @@ private:
 	int order_num;
 	OrderDate order_date;
 	string order_seller_id;//U001
-	string order_buyer_id;//U001
+	string order_buyer_id;//U002
 };
 
 #endif

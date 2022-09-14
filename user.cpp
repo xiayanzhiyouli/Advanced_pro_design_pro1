@@ -3,6 +3,7 @@
 #include<iostream>
 #include <cstring>
 #include<string.h>
+#include <iomanip>
 
 #define is_num(X) (X >= '0' && X <= '9')
 
@@ -49,4 +50,19 @@ bool User::Set_balance(double balance)
 void User::Set_state(UserState us) 
 {
 	user_state = us; 
+}
+
+void User::PrintAll()
+{
+	cout << "==========================================="<<endl;
+	cout << "User ID       : "<< user_id <<endl;
+	cout << "User Name     : "<< user_name <<endl;
+	cout << "User Tele     : "<< user_tele <<endl;
+	cout << "User Address  : "<< user_addr <<endl;
+	cout << "User Balance  : "<< user_balance <<endl;
+	if(user_state == ACTIVE)
+		cout << "User State    : "<< "ACTIVE" <<endl;
+	else
+		cout << "User State    : "<< "INACTIVE" <<endl;
+	cout << "==========================================="<<endl;
 }

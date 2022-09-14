@@ -3,6 +3,7 @@
 #include<iostream>
 #include <cstring>
 #include<string.h>
+#include <iomanip>
 
 #define is_num(X) (X >= '0' && X <= '9')
 
@@ -51,11 +52,8 @@ void Commodity::Set_sellerId(char* se_id)
 	com_sellerId = se_id;
 }
 
-bool Commodity::Set_addedDate(ComDate a_date)  
+bool Commodity::Set_addedDate(int y,int m,int d)  
 {
-	int y = a_date.year;
-	int m = a_date.month;
-	int d = a_date.day;
 	if(y <= 0 || m <= 0 || m >12 || d <= 0)
 		return false;
 	if((m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) && d >31)
@@ -72,9 +70,9 @@ bool Commodity::Set_addedDate(ComDate a_date)
 		else if (d > 28) //not leap year
 			return false; 
 	}
-	com_addedDate.year = a_date.year;
-	com_addedDate.month = a_date.month;
-	com_addedDate.day  = a_date.day;
+	com_addedDate.year = y;
+	com_addedDate.month = m;
+	com_addedDate.day  = d;
 	return true;
 }
 
@@ -82,3 +80,22 @@ void Commodity::Set_state(CommodityState cs)
 {
 	com_state = cs;
 }
+
+void Commodity::PrintAll()
+{
+	cout << "==========================================="<<endl;
+	cout << "Commodity ID:          " << com_id <<endl;
+	cout << "Commodity Name :       " << com_name <<endl;
+	cout << "Commodity Price :      " << com_price <<endl;
+	cout << "Commodity Number :     " << com_id <<endl;
+	cout << "Commodity Descrption : " << com_description <<endl;
+	cout << "Seller ID :            " << com_sellerId <<endl;
+	cout << "Added Date :           " << com_addedDate.year << "-" << com_addedDate.month <<"-" << com_addedDate.day<<endl;
+	//cout << "Commodity State :      " << com_state <<endl;
+	if(com_state == ONAUCTION)
+		cout << "Commodity State :      " << "ONAUCTION" <<endl;
+	else
+		cout << "Commodity State :      " << "REMOVED" <<endl;
+	cout << "==========================================="<<endl;
+}
+

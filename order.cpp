@@ -3,6 +3,7 @@
 #include<iostream>
 #include <cstring>
 #include<string.h>
+#include <iomanip>
 
 #define is_num(X) (X >= '0' && X <= '9')
 
@@ -46,11 +47,8 @@ bool Order::Set_num(int num)
 	return false;
 }
 
-bool Order::Set_order_date(OrderDate od) 
+bool Order::Set_order_date(int y,int m,int d) 
 {
-	int y = od.year;
-	int m = od.month;
-	int d = od.day;
 	if(y <= 0 || m <= 0 || m >12 || d <= 0)
 		return false;
 	if((m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) && d >31)
@@ -67,9 +65,9 @@ bool Order::Set_order_date(OrderDate od)
 		else if (d > 28) //not leap year
 			return false; 
 	}
-	order_date.year = od.year;
-	order_date.month = od.month;
-	order_date.day  = od.day;
+	order_date.year = y;
+	order_date.month = m;
+	order_date.day  = d;
 	return true;
 }
 
@@ -91,4 +89,17 @@ bool Order::Set_buyer_id(char* str)
 		return true;
 	}
 	return false;
+}
+
+void Order::PrintAll()
+{
+	cout << "==========================================="<<endl;
+	cout << "Order ID      : "<< order_id <<endl;
+	cout << "Commodity ID  : "<< order_com_id <<endl;
+	cout << "Price         : "<< order_price <<endl;
+	cout << "Num           : "<< order_num <<endl;
+	cout << "Trade Date    : "<< order_date.year << "-" << order_date.month << "-" << order_date.day <<endl;
+	cout << "Seller ID     : "<< order_seller_id <<endl;
+	cout << "Buyer ID      : "<< order_buyer_id <<endl;
+	cout << "==========================================="<<endl;
 }

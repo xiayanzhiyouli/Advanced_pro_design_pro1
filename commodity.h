@@ -5,6 +5,7 @@
 #include<iostream>
 #include<cstring>
 #include<string.h>
+#include <iomanip>
 //#include <string>
 using namespace std;
 
@@ -48,8 +49,23 @@ public:
 	bool Set_num (int num);
 	void Set_description(char* des);
 	void Set_sellerId(char* se_id);
-	bool Set_addedDate(ComDate a_date);
+	bool Set_addedDate(int y, int m, int d);
 	void Set_state(CommodityState cs);	
+	void PrintAll();
+
+	friend ostream& operator << (ostream& os, const Commodity com)
+	{
+		os << com.com_id << "  " << setw(10) << com.com_name << setw(10) << com.com_price << setw(5) 
+		<< com.com_num << " "<<com.com_sellerId << " " 
+		<< com.com_addedDate.year << "-"<<com.com_addedDate.month << "-"<<com.com_addedDate.day;
+
+		if(com.com_state == ONAUCTION)
+			os << "  ONAUCTION" <<endl;
+		else
+			os << "  REMOVED" <<endl;
+		
+		return os;
+	};
 
 private:
 	string com_id;
