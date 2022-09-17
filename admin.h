@@ -7,6 +7,11 @@
 #include <string.h>
 #include <iomanip>
 //#include <string>
+
+#include <fstream>
+#include <cstdlib>
+#include <sstream>
+
 using namespace std;
 
 class Admin
@@ -28,5 +33,5 @@ public:
 private:
     string admin_name;
     string admin_password;
-}
+};
 #endif
