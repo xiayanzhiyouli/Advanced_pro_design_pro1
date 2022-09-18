@@ -34,21 +34,21 @@ public:
 		com_state = ONAUCTION;	
 	};
 	
-	const char* Get_id() const {return com_id.c_str();};
-	const char* Get_name() const {return com_name.c_str();};
+	string Get_id() const {return com_id;};
+	string Get_name() const {return com_name;};
 	const double Get_price() const {return com_price;};
 	const int Get_num() const {return com_num;};
-	const char* Get_description() const {return com_description.c_str();};
-	const char* Get_sellerId() const {return com_sellerId.c_str();};
+	string Get_description() const {return com_description;};
+	string Get_sellerId() const {return com_sellerId;};
 	const ComDate Get_addedDate() const {return com_addedDate;};
 	const CommodityState Get_state() const {return com_state;};
 	
-	bool Set_id(char* str);
-	void Set_name(char* str);
+	bool Set_id(string str);
+	void Set_name(string str);
 	bool Set_price(double price);
 	bool Set_num (int num);
-	void Set_description(char* des);
-	void Set_sellerId(char* se_id);
+	void Set_description(string des);
+	void Set_sellerId(string se_id);
 	bool Set_addedDate(int y, int m, int d);
 	void Set_state(CommodityState cs);	
 	void PrintAll();

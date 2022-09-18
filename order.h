@@ -32,21 +32,21 @@ public:
 		order_buyer_id = "Not Setted";		
 	}
 	
-	const char* Get_id() const {return order_id.c_str();};
-	const char* Get_com_id() const {return order_com_id.c_str();};
+	string Get_id() const {return order_id;};
+	string Get_com_id() const {return order_com_id;};
 	const double Get_price() const {return order_price;};
 	const int Get_num() const {return order_num;};
 	const OrderDate Get_order_date() const {return order_date;};
-	const char* Get_seller_id() const {return order_seller_id.c_str();};
-	const char* Get_buyer_id() const {return order_buyer_id.c_str();};
+	string Get_seller_id() const {return order_seller_id;};
+	string Get_buyer_id() const {return order_buyer_id;};
 	
-	bool Set_id(char* str);
-	bool Set_com_id(char* str);
+	bool Set_id(string str);
+	bool Set_com_id(string str);
 	bool Set_price(double price);
 	bool Set_num(int num);
 	bool Set_order_date(int y,int m,int d);
-	bool Set_seller_id(char* str);
-	bool Set_buyer_id(char* str);
+	bool Set_seller_id(string str);
+	bool Set_buyer_id(string str);
 	void PrintAll();
 
 	friend ostream& operator << (ostream& os, const Order od)

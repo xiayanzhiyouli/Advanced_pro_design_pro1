@@ -105,7 +105,7 @@ void Admin::Remove_commodity()
     }
     else
     {
-        cout << "Enter the ID of the commodity you want to ban."<<endl;
+        cout << "Enter the ID of the commodity you want to remove."<<endl;
         string id,all_content;
         string target[7];
         bool find_com = false,removed_com = false;

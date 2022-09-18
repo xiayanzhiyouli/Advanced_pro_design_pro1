@@ -7,6 +7,11 @@
 #include <string.h>
 #include <iomanip>
 //#include <string>
+
+#include <fstream>
+#include <cstdlib>
+#include <sstream>
+
 using namespace std;
 
 enum UserState  {INACTIVE,ACTIVE};
@@ -18,26 +23,33 @@ public:
 	user_name = "Not Setted";	
 	user_tele = "Not Setted";	
 	user_addr = "Not Setted";	
+	user_password = "Not Setted";
 	user_balance = 0;
 	user_state = ACTIVE;
 	};
 	
-	const char* Get_id() const{return user_id.c_str();};
-	const char* Get_name() const{return user_name.c_str();};
-	const char* Get_tele() const{return user_tele.c_str();};
-	const char* Get_addr() const{return user_addr.c_str();};
-	const char* Get_password() const{return user_password.c_str();};
+	string Get_id() const{return user_id;};
+	string Get_name() const{return user_name;};
+	string Get_tele() const{return user_tele;};
+	string Get_addr() const{return user_addr;};
+	string Get_password() const{return user_password;};
 	const double Get_balance() const{return user_balance;};
 	const UserState Get_state() const{return user_state;};
 	
-	bool Set_id(char* str);
-	void Set_name(char* str);
-	void Set_tele(char* str);
-	void Set_addr(char* str);
-	void Set_password(char* str);	
+	bool Set_id(string str);
+	void Set_name(string str);
+	void Set_tele(string str);
+	void Set_addr(string str);
+	void Set_password(string str);	
 	bool Set_balance(double balance);
 	void Set_state(UserState us);
 	void PrintAll();
+
+	void Seller_release_com();
+	void Seller_check_com();//Only check user's own commodity.
+	void Seller_change_com();//Only change user's own commodity.
+	void Seller_remove_com();//Only remove user's own commodity.
+	void Seller_check_order();//Only check user's own order.
 	
 	friend ostream& operator << (ostream& os, const User us)
 	{
@@ -51,6 +63,7 @@ public:
 
 		return os;
 	};
+
 
 private:
 	string user_id;

@@ -23,8 +23,8 @@ public:
         admin_password = "123456";
     }
 
-    const char* Get_name() const {return admin_name.c_str();};
-    const char* Get_password() const {return admin_password.c_str();};
+    string Get_name() const {return admin_name;};
+    string Get_password() const {return admin_password;};
 
     void Check_commodity();
     void Search_commodity();

@@ -13,6 +13,8 @@ using namespace std;
 
 int main()
 {
+	//User us;
+	//us.Set_id("U001");
 	Admin ad;
-	ad.Search_commodity();
+	ad.Remove_commodity();
 }

@@ -7,9 +7,9 @@
 
 #define is_num(X) (X >= '0' && X <= '9')
 
-bool Order::Set_id(char* str)
+bool Order::Set_id(string str)
 {
-	if(strlen(str) == 4 && str[0] == 'T' && is_num(str[1]) && is_num(str[2]) && is_num(str[3]) )
+	if(str.length() == 4 && str[0] == 'T' && is_num(str[1]) && is_num(str[2]) && is_num(str[3]) )
 	{
 		order_id = str;
 		return true;
@@ -17,9 +17,9 @@ bool Order::Set_id(char* str)
 	return false;
 }
 
-bool Order::Set_com_id(char* str) 
+bool Order::Set_com_id(string str) 
 {
-	if(strlen(str) == 4 && str[0] == 'M' && is_num(str[1]) && is_num(str[2]) && is_num(str[3]) )
+	if(str.length() == 4 && str[0] == 'M' && is_num(str[1]) && is_num(str[2]) && is_num(str[3]) )
 	{
 		order_com_id = str;
 		return true;
@@ -71,9 +71,9 @@ bool Order::Set_order_date(int y,int m,int d)
 	return true;
 }
 
-bool Order::Set_seller_id(char* str) 
+bool Order::Set_seller_id(string str) 
 {
-	if(strlen(str) == 4 && str[0] == 'U' && is_num(str[1]) && is_num(str[2]) && is_num(str[3]) )
+	if(str.length() == 4 && str[0] == 'U' && is_num(str[1]) && is_num(str[2]) && is_num(str[3]) )
 	{
 		order_seller_id = str;
 		return true;
@@ -81,9 +81,9 @@ bool Order::Set_seller_id(char* str)
 	return false;
 }
 
-bool Order::Set_buyer_id(char* str) 
+bool Order::Set_buyer_id(string str) 
 {
-	if(strlen(str) == 4 && str[0] == 'U' && is_num(str[1]) && is_num(str[2]) && is_num(str[3]) )
+	if(str.length() == 4 && str[0] == 'U' && is_num(str[1]) && is_num(str[2]) && is_num(str[3]) )
 	{
 		order_buyer_id = str;
 		return true;

@@ -7,9 +7,9 @@
 
 #define is_num(X) (X >= '0' && X <= '9')
 
-bool Commodity::Set_id(char* str)  
+bool Commodity::Set_id(string str)  
 {
-	if(strlen(str) == 4 && str[0] == 'M' && is_num(str[1]) && is_num(str[2]) && is_num(str[3]) )
+	if(str.length() == 4 && str[0] == 'M' && is_num(str[1]) && is_num(str[2]) && is_num(str[3]) )
 	{
 		com_id = str;
 		return true;
@@ -17,7 +17,7 @@ bool Commodity::Set_id(char* str)
 	return false;
 }
 
-void Commodity::Set_name(char* str) 
+void Commodity::Set_name(string str) 
 {
 	com_name = str;
 }
@@ -42,12 +42,12 @@ bool Commodity::Set_num (int num)
 	return false;
 }
 
-void Commodity::Set_description(char* des)  
+void Commodity::Set_description(string des)  
 {
 	com_description = des;
 }
 
-void Commodity::Set_sellerId(char* se_id)  
+void Commodity::Set_sellerId(string se_id)  
 {
 	com_sellerId = se_id;
 }
