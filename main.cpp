@@ -17,11 +17,6 @@ extern void main_platform();
 extern Admin* p2ad;
 int main()
 {
-	/*Admin ad;
-	ad.Remove_commodity();
-	User us;
-	us.Set_id("U001");
-	us.Buyer_search_com();*/
 	signin();
 	main_platform();
 	delete p2ad;

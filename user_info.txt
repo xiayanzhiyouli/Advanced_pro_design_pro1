@@ -18,9 +18,3 @@ U009 Jessica 17189096766 03823736 30.0 ACTIVE
 NO.17, Renming.RD
 U010 Barbara 15979052815 *&35fg#%#ry 750000.0 ACTIVE
 NO.67, Huanghe.RD
-
-
-
-
-
-

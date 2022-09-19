@@ -26,10 +26,11 @@ void Admin::Check_commodity()
         cout <<"Com ID    Name                          Price     Number  Seller ID  Added Date  State"<<endl;
         while (!in.eof() )
         {
-            string buffer1,buffer2,temp;
+            string buffer1,buffer2,buffer3,temp;
             getline(in,buffer1);// main info except name and description;
             getline(in,buffer2);//name
-
+            getline(in,buffer3);
+            //description need to be read in order to move the pionter of file, without printed;
             istringstream is(buffer1);
 
             is >> temp;Out(10,temp);//id
@@ -39,10 +40,7 @@ void Admin::Check_commodity()
             is >> temp;Out(11,temp);//seller id
             is >> temp;Out(12,temp);//date
             is >> temp;Out(12,temp);//state
-            cout << endl;
-            
-            getline (in,buffer1);
-            //description need to be read in order to move the pionter of file, without printed;
+            cout << endl;  
         }
         cout<<"================================================================================================="<<endl;
         cout<<endl<<endl;
@@ -180,6 +178,7 @@ void Admin::Remove_commodity()
             cin >> confirm_str;
             if(confirm_str == "y" || confirm_str == "Y")
             {
+                all_content = all_content.substr(0,all_content.length() -1);//delete the last '\n'.
                 ofstream out("commodity_info.txt");
                 out.flush();
                 out << all_content;
@@ -333,6 +332,7 @@ void Admin::Ban_user()
             cin >> confirm_str;
             if(confirm_str == "y" || confirm_str == "Y")
             {
+                all_content = all_content.substr(0,all_content.length() -1);//delete the last '\n'.
                 ofstream out("user_info.txt");
                 out.flush();
                 out << all_content;
