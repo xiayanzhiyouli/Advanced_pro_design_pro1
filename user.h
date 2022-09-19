@@ -50,6 +50,11 @@ public:
 	void Seller_change_com();//Only change user's own commodity.
 	void Seller_remove_com();//Only remove user's own commodity.
 	void Seller_check_order();//Only check user's own order.
+
+	void Buyer_check_com();//Only check commodity on auction.
+	void Buyer_check_order();//Only check user's own order.
+	void Buyer_search_com();//Only search commodity on auction.
+	void Buyer_buy_com();//Only buy commodity on auction.
 	
 	friend ostream& operator << (ostream& os, const User us)
 	{

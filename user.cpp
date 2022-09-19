@@ -89,7 +89,7 @@ void User::Seller_check_com()
     {
         bool find = false;
         cout<<"================================================================================================="<<endl;
-        cout <<"Com ID    Name                          Price     Number  Seller ID  Added Date  State"<<endl;
+        cout <<"Com ID    Name                          Price     Number  Added Date  State"<<endl;
         while (!in.eof() )
         {
             string buffer1,buffer2,buffer3,id,price,num,seller,addedDate,state;
@@ -107,7 +107,7 @@ void User::Seller_check_com()
                 Out(30,buffer2);//name
                 Out(10,price);
                 Out(8,num);
-                Out(11,seller);
+                //Out(11,seller);
                 Out(12,addedDate);
                 Out(12,state);
                 cout << endl;
@@ -227,6 +227,171 @@ void User::Seller_remove_com()
 }
 
 void User::Seller_check_order()
+{
+    ifstream in("order_info.txt");
+    if (!in.is_open())
+        cout << "Error opening file"<<endl; 
+    else
+    {
+        bool find = false;
+        cout<<"==========================================================================="<<endl;
+        cout <<"Order ID  Com id  Price     Number    Date        Buyer ID"<<endl; 
+        while (!in.eof() )
+        {
+            string buffer,id,com,price,num,date,seller,buyer;
+            getline(in,buffer);
+            istringstream is(buffer);
+
+            is >> id;is >> com;is >> price;is >> num;is >> date;is >> seller;is >> buyer;
+            if(seller == user_id)
+            {
+                find = true;
+                Out(10,id);//Order id
+                Out(8,com);//Commodity id
+                Out(10,price);//Price
+                ;Out(10,num);//Number
+                Out(12,date);//Date
+                //Out(11,seller);//Seller ID
+                Out(10,buyer);//Buyer ID
+                cout << endl;
+            }
+        }
+        cout<<"==========================================================================="<<endl;
+        if(find == false)
+            cout << "Fail to find your order."<<endl;
+        cout<<endl<<endl;
+    }
+    in.close();
+}
+
+void User::Buyer_check_com()
+{
+    ifstream in("commodity_info.txt");
+    if (!in.is_open())
+        cout << "Error opening file"<<endl; 
+    else
+    {
+        bool find = false;
+        cout<<"================================================================================================="<<endl;
+        cout <<"Com ID    Name                          Price     Number  Seller ID  Added Date  State"<<endl;
+        while (!in.eof() )
+        {
+            string buffer1,buffer2,buffer3,id,price,num,seller,addedDate,state;
+            getline(in,buffer1);// main info except name and description;
+            getline(in,buffer2);//name
+            getline(in,buffer3);//description 
+
+            istringstream is(buffer1);
+			is >> id;is >> price;is >> num;is >> seller;is >> addedDate;is >> state;
+			
+            if(state == "ONAUCTION")
+            {
+                find = true;
+                Out(10,id);
+                Out(30,buffer2);//name
+                Out(10,price);
+                Out(8,num);
+                Out(11,seller);
+                Out(12,addedDate);
+                Out(12,state);
+                cout << endl;
+            }   
+        }
+        cout<<"================================================================================================="<<endl;
+        if(find == false)
+            cout <<"Fail to find commodity on auction."<<endl;
+        else
+            cout <<"Here are all the commodities on auction."<<endl;
+        cout<<endl<<endl;
+        in.close();
+    }
+}
+
+void User::Buyer_check_order()
+{
+    ifstream in("order_info.txt");
+    if (!in.is_open())
+        cout << "Error opening file"<<endl; 
+    else
+    {
+        bool find = false;
+        cout<<"==========================================================================="<<endl;
+        cout <<"Order ID  Com id  Price     Number    Date        Seller ID  "<<endl; 
+        while (!in.eof() )
+        {
+            string buffer,id,com,price,num,date,seller,buyer;
+            getline(in,buffer);
+            istringstream is(buffer);
+
+            is >> id;is >> com;is >> price;is >> num;is >> date;is >> seller;is >> buyer;
+            if(buyer == user_id)
+            {
+                find = true;
+                Out(10,id);//Order id
+                Out(8,com);//Commodity id
+                Out(10,price);//Price
+                ;Out(10,num);//Number
+                Out(12,date);//Date
+                Out(11,seller);//Seller ID
+                //Out(10,buyer);//Buyer ID
+                cout << endl;
+            }
+        }
+        cout<<"==========================================================================="<<endl;
+        if(find == false)
+            cout << "Fail to find your order."<<endl;
+        cout<<endl<<endl;
+    }
+    in.close();
+}
+
+void User::Buyer_search_com()
+{
+    ifstream in("commodity_info.txt");
+    if (!in.is_open())
+        cout << "Error opening file"<<endl; 
+    else
+    {
+        string target;
+        bool find = false;
+        cout << "Input the name of the commodity you want."<<endl;
+        cin >> target;
+        cout<<"================================================================================================="<<endl;
+        cout <<"Com ID    Name                          Price     Number  Seller ID  Added Date"<<endl;
+        while (!in.eof() )
+        {
+            string buffer1,buffer2,buffer3,id,price,num,seller,date,state;
+            getline(in,buffer1);// main info except name and description;
+            getline(in,buffer2);//name
+            getline(in,buffer3);//description 
+
+            istringstream is(buffer1);
+            is >> id;is >> price;is >> num;is >> seller;is >> date;is >> state;
+            if(strstr(buffer2.c_str(),target.c_str()) != NULL && state == "ONAUCTION")
+            {
+                find = true;
+                
+                Out(10,id);//id
+                Out(30,buffer2); //name 
+                Out(10,price);//price
+                Out(8,num);//number
+                Out(11,seller);//seller id
+                Out(12,date);//date
+                //Out(12,state);//state
+                cout << endl;
+            }   
+        }
+        cout<<"================================================================================================="<<endl;
+        if(find == false)
+            cout<<"Fail to find the commodity you want. Please check the name."<<endl;
+        else
+            cout <<"Here are all the commodities on auction that match the name you gave."<<endl;
+        cout<<endl<<endl;
+        in.close();
+    }
+}
+
+void User::Buyer_buy_com()
 {
 
 }
