@@ -125,7 +125,138 @@ void User::Seller_check_com()
 
 void User::Seller_change_com()
 {
+    ifstream in("commodity_info.txt");
+    if (!in.is_open())
+    {
+        cout << "Error opening file"<<endl; 
+        in.close();
+    }
+    else
+    {
+        cout << "Enter the ID of the commodity you want to change."<<endl;
+        string id;
+        string target[7];
+        bool find_com = false,removed_com = false;
+        cin >> id;
 
+        while (!in.eof() )
+        {
+            string buffer1,buffer2,buffer3,temp;
+            getline(in,buffer1);// main info except name and description;
+            getline(in,buffer2);//name
+            getline(in,buffer3);//description
+
+            istringstream is(buffer1);
+
+            is >> temp;//id
+            if(temp == id)
+            {
+                target[0] = temp;
+                for(int i = 0;i < 4;++i)
+                {
+                    is >> temp;
+                    target[i + 1] = temp;
+                }
+				if(target[3] == user_id)
+					find_com = true;
+                target[5] = buffer2;
+                target[6] = buffer3;
+                is >> temp;
+                if(temp == "REMOVED")
+                    removed_com = true;
+            }
+        }
+        if(find_com == false)
+        {
+            cout << "Can not find this commodity! Please check commodity's ID."<<endl;
+            in.close();
+        }
+        else if(removed_com == true)
+        {
+            cout << "This commodity has been removed! Please check commodity's ID."<<endl;
+            in.close();
+        }
+        else
+        {
+            in.close();
+            cout <<"=========================================================================="<<endl;
+            cout <<"ID:          "<<target[0]<<endl;
+            cout <<"Price:       "<<target[1]<<endl;
+            cout <<"Number:      "<<target[2]<<endl;
+            cout <<"Seller ID:   "<<target[3]<<endl;
+            cout <<"Added Date:  "<<target[4]<<endl;
+            cout <<"Name:        "<<target[5]<<endl;
+            cout <<"Description: "<<target[6]<<endl;
+            cout <<"=========================================================================="<<endl;
+            cout <<"This is your commodity's information."<<endl;
+            cout <<"Press '1' to change its price, 2 for description, and 3 for both of them."<<endl;
+            string change;
+            cin >> change;
+            if(change == "1")
+            {
+                cout << "Input new price."<<endl;
+                cin >> target[1];
+            }
+            else if(change == "2")
+            {
+                cout << "Input new description."<<endl;
+                getline(cin,target[6]);
+                getline(cin,target[6]);
+            }
+            else if(change == "3")
+            {
+                cout << "Input new price."<<endl;
+                cin >> target[1];
+                cout << "Input new description."<<endl;
+                getline(cin,target[6]);
+                getline(cin,target[6]);
+            }
+            else
+            {
+                cout << "Wrong number!"<<endl;
+            }
+            
+            string all_content,rw1,rw2,rw3,tar_id;
+            ifstream reWrite("commodity_info.txt");
+
+            while (!in.eof() )
+            {
+                getline(reWrite,rw1);// main info except name and description;
+                getline(reWrite,rw2);//name
+                getline(reWrite,rw3);//description
+
+                istringstream rw(rw1);
+
+                rw >> tar_id;
+
+                if(tar_id == id)
+                {
+                    for(int i = 0;i < 4;++i)
+                    {
+                        all_content += target[i];
+                        all_content += " ";
+                    }
+                    all_content += "ONAUCTION"; all_content += "\n";
+                    all_content += target[5]; all_content += "\n";
+                    all_content += target[6]; all_content += "\n";
+                }
+                else
+                {
+                    all_content += rw1; all_content += "\n";
+                    all_content += rw2; all_content += "\n";
+                    all_content += rw3; all_content += "\n";
+                }
+            }
+            reWrite.close();
+            all_content = all_content.substr(0,all_content.length() -1);//delete the last '\n'.
+            
+            ofstream out("commodity_info.txt");
+            out.flush();
+            out << all_content;
+            out.close();
+            cout << "You have successfully change the information."<<endl;
+        }
+    }
 }
 
 void User::Seller_remove_com()
