@@ -1,4 +1,4 @@
-M001 30.0 5 U001 2022-9-17 ONAUCTION
+M001 30.0 5 U001 ONAUCTION
 Basic Programme Design
 This book is designed for freshmen of CS;
 M002 78.0 1 U001 2022-9-7 ONAUCTION

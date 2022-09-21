@@ -77,7 +77,41 @@ void User::PrintAll()
 
 void User::Seller_release_com()
 {
+    string id,price,number,name,description,all_content,last_str_id;
+    ifstream in("commodity_info.txt");
+    if (!in.is_open())
+        cout << "Error opening file"<<endl; 
+    else
+    {
+        while (!in.eof() )
+        {
+            string buffer1,buffer2,buffer3;
+            getline(in,buffer1);// main info except name and description;
+            getline(in,buffer2);//name
+            getline(in,buffer3);//description 
 
+            all_content += buffer1; all_content += "\n";
+            all_content += buffer2; all_content += "\n";
+            all_content += buffer3; all_content += "\n";
+
+            istringstream is(buffer1);
+			is >> last_str_id;
+        }
+        in.close();
+
+        cout << "Input "<<endl;
+
+        int last_num_id = stoi(last_str_id.substr(1,3));
+        id = "M" + to_string(last_num_id + 1);
+
+        all_content += id; all_content += " ";
+        all_content += price; all_content += " ";
+        all_content += number; all_content += " ";
+        all_content += user_id; all_content += " ";
+        all_content += "ONAUCTION"; all_content += "\n";
+        all_content += name; all_content += "\n";
+        all_content += description;
+    }
 }
 
 void User::Seller_check_com()
@@ -219,7 +253,7 @@ void User::Seller_change_com()
             string all_content,rw1,rw2,rw3,tar_id;
             ifstream reWrite("commodity_info.txt");
 
-            while (!in.eof() )
+            while (!reWrite.eof() )
             {
                 getline(reWrite,rw1);// main info except name and description;
                 getline(reWrite,rw2);//name

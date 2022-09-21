@@ -11,15 +11,22 @@
 #include <unistd.h>
 
 #include "admin.h"
+#include "user.h"
 
 using namespace std;
 
 void Administrator_login();
+void Administrator_main();
 void User_register();
 void User_login();
-void Administrator_main();
+void User_main();
+void Buyer_main();
+void Seller_main();
+void Personal_information();
+
 
 Admin* p2ad = new Admin;
+User* p2us = new User;
 
 void signin()
 {
@@ -178,7 +185,126 @@ void User_register()
 
 void User_login()
 {
+    string log_id,log_password;
+    cout << "Please input your user ID."<<endl;
+    cin >> log_id;
+    cout << "Please input your password."<<endl;
+    cin >> log_password;
 
+    string id,name,tele,password,balance,state,addr;
+
+    ifstream in("user_info.txt");
+    if (!in.is_open())
+    {
+        cout << "Error opening file"<<endl; 
+        in.close();
+    }
+    else
+    {
+        bool find_user = false;
+        while (!in.eof() )
+        {
+            string buffer1,buffer2;
+            getline(in,buffer1);// main info except address;
+            getline(in,buffer2);//address
+
+            istringstream is(buffer1);
+            is >> id; 
+            if(id == log_id)
+            {
+                find_user = true;
+                is >> name; is >> tele; is >> password; is >> balance; is >> state; 
+                addr = buffer2;
+            }      
+        }
+        in.close();
+        if(find_user == false)
+        {
+            cout << "Fail to find your ID!"<<endl;
+            sleep(1);
+        }
+        else if(password != log_password)
+        {
+            cout << "Wrong password!"<<endl;
+            sleep(1);
+        }
+        else if(state != "ACTIVE")
+        {
+            cout << "You have been banned!"<<endl;
+            sleep(1);
+        }
+        else
+        {
+            p2us->Set_id(id);
+            p2us->Set_name(name);
+            p2us->Set_tele(tele);
+            p2us->Set_password(password);
+            p2us->Set_balance(stod(balance));
+            p2us->Set_addr(addr);
+            cout << "Login successfully!"<<endl;
+            sleep(1);
+            User_main();
+        }
+
+    }
+}
+
+void User_main()
+{
+    while(1)
+    {
+        system("clear");
+        cout <<"======================"<<endl;
+        cout <"1 :I am a buyer."<<endl;
+        cout <"2 :I am a seller."<<endl;
+        cout <"3 :Personal information."<<endl;
+        cout <"4 :Exit."<<endl;
+        cout <<"======================"<<endl;
+        string input;
+        cout << "Input the number you want."<<endl;
+        cin >> input;
+        if(input == "1")
+        {
+            Buyer_main();
+        }
+        else if(input == "2")
+        {
+            Seller_main();
+        }
+        else if(input == "3")
+        {
+            Personal_information();
+        }
+        else if(input == "4")
+        {
+            break;
+        }
+        else 
+        {
+            cout << "Wrong number!"<<endl;
+            sleep(1);
+        }
+    }
+}
+
+void Buyer_main()
+{
+
+}
+
+void Seller_main()
+{
+
+}
+
+void Personal_information()
+{
+    while(1)
+    {
+        system("clear");
+        cout <<"======================="<<endl;
+        cout <<"======================="<<endl;
+    }
 }
 
 void Administrator_main()

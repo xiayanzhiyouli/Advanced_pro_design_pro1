@@ -15,14 +15,14 @@ extern void signin();
 extern void main_platform();
 
 extern Admin* p2ad;
+extern User* p2us;
+
 int main()
 {
-	/*signin();
+	signin();
 	main_platform();
-	delete p2ad;*/
-	User us;
-	us.Set_id("U001");
-	us.Seller_change_com();
+	delete p2ad;
+	delete p2us;
 }
 
 
