@@ -23,6 +23,8 @@ void User_main();
 void Buyer_main();
 void Seller_main();
 void Personal_information();
+void Personal_recharge();
+void Personal_change();
 
 
 Admin* p2ad = new Admin;
@@ -215,6 +217,7 @@ void User_login()
                 find_user = true;
                 is >> name; is >> tele; is >> password; is >> balance; is >> state; 
                 addr = buffer2;
+                break;
             }      
         }
         in.close();
@@ -255,10 +258,10 @@ void User_main()
     {
         system("clear");
         cout <<"======================"<<endl;
-        cout <"1 :I am a buyer."<<endl;
-        cout <"2 :I am a seller."<<endl;
-        cout <"3 :Personal information."<<endl;
-        cout <"4 :Exit."<<endl;
+        cout <<"1 :I am a buyer."<<endl;
+        cout <<"2 :I am a seller."<<endl;
+        cout <<"3 :Personal information."<<endl;
+        cout <<"4 :Exit."<<endl;
         cout <<"======================"<<endl;
         string input;
         cout << "Input the number you want."<<endl;
@@ -289,12 +292,98 @@ void User_main()
 
 void Buyer_main()
 {
-
+    while(1)
+    {
+        system("clear");
+        cout <<"=============================="<<endl;
+        cout <<"1 :Check all the commodities."<<endl;
+        cout <<"2 :Buy the commodities."<<endl;
+        cout <<"3 :Search for commodities."<<endl;
+        cout <<"4 :Check my order."<<endl;
+        cout <<"5 :Check commodity's detailed information."<<endl;
+        cout <<"6 :Exit."<<endl;
+        cout <<"=============================="<<endl;
+        string input;
+        cout <<"Input the number you want."<<endl;
+        cin >> input;
+        if(input == "1")
+        {
+            p2us->Buyer_check_com();
+        }
+        else if(input == "2")
+        {
+            p2us->Buyer_buy_com();
+        }
+        else if(input == "3")
+        {
+            p2us->Buyer_search_com();
+        }
+        else if(input == "4")
+        {
+            p2us->Buyer_check_order();
+        }
+        else if(input == "5")
+        {
+            //TO DO
+        }
+        else if(input == "6")
+        {
+            break;
+        }
+        else 
+        {
+            cout <<"Wrong number!"<<endl;
+            sleep(1);
+        }
+    }
 }
 
 void Seller_main()
 {
-
+    while(1)
+    {
+        system("clear");
+        cout <<"=============================="<<endl;
+        cout <<"1 :Release commodities."<<endl;
+        cout <<"2 :Check the commodities."<<endl;
+        cout <<"3 :Change commodities's information."<<endl;
+        cout <<"4 :Remove commodity."<<endl;
+        cout <<"5 :Check my order."<<endl;
+        cout <<"6 :Exit."<<endl;
+        cout <<"=============================="<<endl;
+        string input;
+        cout <<"Input the number you want."<<endl;
+        cin >> input;
+        if(input == "1")
+        {
+            p2us->Seller_release_com();
+        }
+        else if(input == "2")
+        {
+            p2us->Seller_check_com();
+        }
+        else if(input == "3")
+        {
+            p2us->Seller_change_com();
+        }
+        else if(input == "4")
+        {
+            p2us->Seller_remove_com();
+        }
+        else if(input == "5")
+        {
+            p2us->Seller_check_order();
+        }
+        else if(input == "6")
+        {
+            break;
+        }
+        else 
+        {
+            cout <<"Wrong number!"<<endl;
+            sleep(1);
+        }
+    }
 }
 
 void Personal_information()
@@ -303,8 +392,218 @@ void Personal_information()
     {
         system("clear");
         cout <<"======================="<<endl;
+        cout <<"1 :Check personal information."<<endl;
+        cout <<"2 :Chage personal information."<<endl;
+        cout <<"3 :Recharge."<<endl;
+        cout <<"4 :Exit."<<endl;
         cout <<"======================="<<endl;
+        string input;
+        cout << "Input the number you want"<<endl;
+        cin >>input;
+
+        if(input == "1")
+        {
+            p2us->PrintAll();
+            cout <<"Press any key to back."<<endl;
+            string any_key;
+            cin >> any_key;
+        }
+        else if(input == "2")
+        {
+            Personal_change();
+        }
+        else if(input == "3")
+        {
+            Personal_recharge();
+        }
+        else if(input == "4")
+        {
+            break;
+        }
+        else 
+        {
+            cout <<"Wrong number!"<<endl;
+            sleep(1);
+        }
     }
+}
+
+void Personal_change()
+{
+    while(1)
+    {
+        system("clear");
+        p2us->PrintAll();
+        cout << endl;
+        cout <<"1: Change user's name."<<endl;
+        cout <<"2: Change user's tele."<<endl;
+        cout <<"3: Change user's password."<<endl;
+        cout <<"4: Change user's address."<<endl;
+        cout <<"5: Exit."<<endl;
+        cout<<"Input the number you want"<<endl;
+        string input,all_content;
+        bool success = true;
+        cin >> input;
+        if(input == "1")
+        {
+            cout <<"Please input your new name."<<endl;
+            string temp;
+            cin >> temp;
+            p2us->Set_name(temp);
+        }
+        else if(input == "2")
+        {
+            cout <<"Please input your new tele."<<endl;
+            string temp;
+            cin >> temp;
+            p2us->Set_tele(temp);
+        }
+        else if(input == "3")
+        {
+            cout <<"Please input your old password."<<endl;
+            string temp;
+            cin >> temp;
+            if(temp == p2us->Get_password())
+            {
+                cout <<"Please input your new password."<<endl;
+                cin >> temp;
+                p2us->Set_password(temp);
+            }
+            else
+            {
+                success = false;
+                cout << "Wrong password!"<<endl;
+            }
+            
+        }
+        else if(input == "4")
+        {
+            cout <<"Please input your new address."<<endl;
+            string temp;
+            getline(cin,temp);
+            getline(cin,temp);
+            p2us->Set_addr(temp);
+        }
+        else if(input == "5")
+        {
+            break;
+        }
+        else 
+        {
+            success = false;
+            cout <<"Wrong number!"<<endl;
+        }
+
+        if(success == false)
+            sleep(1);
+        else
+        {
+            cout <<"You have change your personal information successfully."<<endl;
+            sleep(1);
+
+            ifstream in("user_info.txt");
+            if (!in.is_open())
+            {
+                cout << "Error opening file"<<endl; 
+                in.close();
+            }
+            else
+            {
+                while (!in.eof() )
+                {
+                    string buffer1,buffer2,temp;
+                    getline(in,buffer1);// main info except address;
+                    getline(in,buffer2);//address
+
+                    istringstream is(buffer1);
+
+                    is >> temp;//id
+                    if(temp == p2us->Get_id())
+                    {
+                        all_content += p2us->Get_id();all_content += " ";
+                        all_content += p2us->Get_name();all_content += " ";
+                        all_content += p2us->Get_tele();all_content += " ";
+                        all_content += p2us->Get_password();all_content += " ";
+                        string long_balance = to_string(p2us->Get_balance());
+                        all_content += long_balance.substr(0,long_balance.length() - 5);all_content += " ";
+                        all_content += "ACTIVE";all_content += '\n';
+                    }
+                    else
+                    {
+                        all_content += buffer1;
+                        all_content += '\n';
+                    }
+                    all_content += buffer2;
+                    all_content += '\n';
+                }
+            
+                in.close();
+
+                all_content = all_content.substr(0,all_content.length() -1);//delete the last '\n'.
+                ofstream out("user_info.txt");
+                out.flush();
+                out << all_content;
+                out.close();
+            }
+        }     
+    }   
+}
+
+void Personal_recharge()
+{
+    cout << "Please input the amount of money."<<endl;
+    double charge;
+    cin >> charge;
+    p2us->Set_balance(p2us->Get_balance() + charge);
+    cout <<"Charge successfully!"<<endl;
+    cout <<"Your balance is :"<<p2us->Get_balance()<<endl;
+
+    ifstream in("user_info.txt");
+    if (!in.is_open())
+    {
+        cout << "Error opening file"<<endl; 
+        in.close();
+    }
+    else
+    {
+        string all_content;
+        while (!in.eof() )
+        {
+            string buffer1,buffer2,temp;
+            getline(in,buffer1);// main info except address;
+            getline(in,buffer2);//address
+
+            istringstream is(buffer1);
+
+            is >> temp;//id
+            if(temp == p2us->Get_id())
+            {
+                all_content += temp;all_content += " ";
+                is >> temp;all_content += temp;all_content += " ";
+                is >> temp;all_content += temp;all_content += " ";
+                is >> temp;all_content += temp;all_content += " ";
+                string long_balance = to_string(p2us->Get_balance());
+                all_content += long_balance.substr(0,long_balance.length() - 5);all_content += " ";
+                all_content += "ACTIVE";all_content += '\n';
+            }
+            else
+            {
+                all_content += buffer1;
+                all_content += '\n';
+            }
+            all_content += buffer2;
+            all_content += '\n';
+        }
+       
+        in.close();
+
+        all_content = all_content.substr(0,all_content.length() -1);//delete the last '\n'.
+        ofstream out("user_info.txt");
+        out.flush();
+        out << all_content;
+        out.close();
+    }
+    sleep(1);
 }
 
 void Administrator_main()

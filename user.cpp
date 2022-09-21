@@ -558,5 +558,5 @@ void User::Buyer_search_com()
 
 void User::Buyer_buy_com()
 {
-
+    //TO DO
 }
