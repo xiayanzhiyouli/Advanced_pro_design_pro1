@@ -324,7 +324,7 @@ void Buyer_main()
         }
         else if(input == "5")
         {
-            //TO DO
+            p2us->Buyer_buy_com();        
         }
         else if(input == "6")
         {

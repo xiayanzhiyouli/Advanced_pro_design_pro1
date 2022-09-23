@@ -1,6 +1,6 @@
-main: main.o order.o user.o commodity.o admin.o signIn.o
+main: main.o order.o user.o commodity.o admin.o signIn.o 
 	g++ -o $@ $^
-main.o: main.cpp order.h user.h commodity.h admin.h
+main.o: main.cpp order.h user.h commodity.h admin.h 
 	g++ -c $<
 order.o: order.cpp order.h
 	g++ -c $<

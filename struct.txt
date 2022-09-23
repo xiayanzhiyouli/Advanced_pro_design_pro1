@@ -1,6 +1,6 @@
-@main_platform();   |-- Administrator_login();          -- Administrator_main();    --p2ad;
+@main_platform();---|-- Administrator_login();---------- Administrator_main();---------p2ad;
                     |-- User_register();
-                    |-- User_login(); --@User_main();   |--@Buyer_main();           --p2us;
-                                                        |--@Seller_main();          --p2us;
-                                                        |--@Personal_information(); |--Personal_recharge();
-                                                                                    |--@Personal_change();
+                    |-- User_login();---@User_main();---|--@Buyer_main();--------------p2us;
+                                                        |--@Seller_main();-------------p2us;
+                                                        |--@Personal_information();----|--Personal_recharge();
+                                                                                       |--@Personal_change();

@@ -9,11 +9,33 @@
 #include <cstdlib>
 #include <sstream>
 
+#include <unistd.h>
+
+#include <ctime>
+
 using namespace std;
 
 #define is_num(X) (X >= '0' && X <= '9')
 
 #define Out(X,Y);  cout.width(X);cout.flags(ios::left);cout << Y;
+
+string get_time()
+{
+	time_t curtime;
+	time(&curtime);
+	tm* nowtime = localtime(&curtime);
+	//year = nowtime->tm_year + 1900;
+	//month = nowtime->tm_month + 1;
+	//day = nowtime->tm_day;
+	string res = to_string(nowtime->tm_year + 1900);
+	res += "-";
+	res += to_string(nowtime->tm_mon + 1);
+	res += "-";
+	res += to_string(nowtime->tm_mday);
+	return res;
+}
+
+
 
 bool User::Set_id(string str) 
 {
@@ -102,15 +124,41 @@ void User::Seller_release_com()
         cout << "Input "<<endl;
 
         int last_num_id = stoi(last_str_id.substr(1,3));
-        id = "M" + to_string(last_num_id + 1);
+        id = to_string(last_num_id + 1);
 
+        if(id.length() == 3)
+            id = "M" + id;
+        if(id.length() == 2)
+            id = "M0" + id;
+        if(id.length() == 1)
+            id = "M00" + id;
+        
+
+        cout << "Please input your commodity's name."<<endl;
+        getline(cin,name);
+        getline(cin,name);
+        cout << "Please input your commodity's description."<<endl;
+        //getline(cin,description);
+        getline(cin,description);
+        cout << "Please input your commodity's price."<<endl;
+        cin >> price;
+        cout << "Please input your commodity's number."<<endl;
+        cin >> number;
         all_content += id; all_content += " ";
         all_content += price; all_content += " ";
         all_content += number; all_content += " ";
         all_content += user_id; all_content += " ";
+        all_content += get_time(); all_content += " ";
         all_content += "ONAUCTION"; all_content += "\n";
         all_content += name; all_content += "\n";
         all_content += description;
+
+        ofstream out("commodity_info.txt");
+        out.flush();
+        out << all_content;
+        out.close();
+        cout << "You have successfully release the commodity."<<endl;
+        sleep(1);
     }
 }
 
