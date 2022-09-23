@@ -1,4 +1,5 @@
 #include "user.h"
+#include "time.h"
 #include<string>
 #include<iostream>
 #include <cstring>
@@ -11,31 +12,13 @@
 
 #include <unistd.h>
 
-#include <ctime>
-
 using namespace std;
 
 #define is_num(X) (X >= '0' && X <= '9')
 
 #define Out(X,Y);  cout.width(X);cout.flags(ios::left);cout << Y;
 
-string get_time()
-{
-	time_t curtime;
-	time(&curtime);
-	tm* nowtime = localtime(&curtime);
-	//year = nowtime->tm_year + 1900;
-	//month = nowtime->tm_month + 1;
-	//day = nowtime->tm_day;
-	string res = to_string(nowtime->tm_year + 1900);
-	res += "-";
-	res += to_string(nowtime->tm_mon + 1);
-	res += "-";
-	res += to_string(nowtime->tm_mday);
-	return res;
-}
-
-
+extern Time* p2te;
 
 bool User::Set_id(string str) 
 {
@@ -84,7 +67,7 @@ void User::Set_state(UserState us)
 
 void User::PrintAll()
 {
-	cout << "==========================================="<<endl;
+	cout << "================================================="<<endl;
 	cout << "User ID       : "<< user_id <<endl;
 	cout << "User Name     : "<< user_name <<endl;
 	cout << "User Tele     : "<< user_tele <<endl;
@@ -94,7 +77,7 @@ void User::PrintAll()
 		cout << "User State    : "<< "ACTIVE" <<endl;
 	else
 		cout << "User State    : "<< "INACTIVE" <<endl;
-	cout << "==========================================="<<endl;
+	cout << "================================================="<<endl;
 }
 
 void User::Seller_release_com()
@@ -148,7 +131,8 @@ void User::Seller_release_com()
         all_content += price; all_content += " ";
         all_content += number; all_content += " ";
         all_content += user_id; all_content += " ";
-        all_content += get_time(); all_content += " ";
+        p2te->Reset();
+        all_content += p2te->GetStrAll(); all_content += " ";
         all_content += "ONAUCTION"; all_content += "\n";
         all_content += name; all_content += "\n";
         all_content += description;
@@ -170,8 +154,8 @@ void User::Seller_check_com()
     else
     {
         bool find = false;
-        cout<<"================================================================================================="<<endl;
-        cout <<"Com ID    Name                          Price     Number  Added Date  State"<<endl;
+        cout<<"======================================================================================================="<<endl;
+        cout <<"Com ID    Name                          Price     Number  Added Date           State"<<endl;
         while (!in.eof() )
         {
             string buffer1,buffer2,buffer3,id,price,num,seller,addedDate,state;
@@ -190,12 +174,12 @@ void User::Seller_check_com()
                 Out(10,price);
                 Out(8,num);
                 //Out(11,seller);
-                Out(12,addedDate);
+                Out(21,addedDate);
                 Out(12,state);
                 cout << endl;
             }   
         }
-        cout<<"================================================================================================="<<endl;
+        cout<<"======================================================================================================="<<endl;
         if(find == false)
             cout <<"Fail to find your commodity."<<endl;
         else
@@ -261,7 +245,7 @@ void User::Seller_change_com()
         else
         {
             in.close();
-            cout <<"=========================================================================="<<endl;
+            cout <<"================================================================================"<<endl;
             cout <<"ID:          "<<target[0]<<endl;
             cout <<"Price:       "<<target[1]<<endl;
             cout <<"Number:      "<<target[2]<<endl;
@@ -269,7 +253,7 @@ void User::Seller_change_com()
             cout <<"Added Date:  "<<target[4]<<endl;
             cout <<"Name:        "<<target[5]<<endl;
             cout <<"Description: "<<target[6]<<endl;
-            cout <<"=========================================================================="<<endl;
+            cout <<"================================================================================"<<endl;
             cout <<"This is your commodity's information."<<endl;
             cout <<"Press '1' to change its price, 2 for description, and 3 for both of them."<<endl;
             string change;
@@ -412,7 +396,7 @@ void User::Seller_remove_com()
         else
         {
             in.close();
-            cout <<"=========================================================================="<<endl;
+            cout <<"================================================================================"<<endl;
             cout <<"ID:          "<<target[0]<<endl;
             cout <<"Price:       "<<target[1]<<endl;
             cout <<"Number:      "<<target[2]<<endl;
@@ -420,7 +404,7 @@ void User::Seller_remove_com()
             cout <<"Added Date:  "<<target[4]<<endl;
             cout <<"Name:        "<<target[5]<<endl;
             cout <<"Description: "<<target[6]<<endl;
-            cout <<"=========================================================================="<<endl;
+            cout <<"================================================================================"<<endl;
             cout<<"Do you want to remove this?"<<endl;
             cout<<"Press 'y' to confirm, or it will not be removed."<<endl;
             string confirm_str;
@@ -447,8 +431,8 @@ void User::Seller_check_order()
     else
     {
         bool find = false;
-        cout<<"==========================================================================="<<endl;
-        cout <<"Order ID  Com id  Price     Number    Date        Buyer ID"<<endl; 
+        cout<<"================================================================================="<<endl;
+        cout <<"Order ID  Com id  Price     Number    Date                 Buyer ID"<<endl; 
         while (!in.eof() )
         {
             string buffer,id,com,price,num,date,seller,buyer;
@@ -463,13 +447,13 @@ void User::Seller_check_order()
                 Out(8,com);//Commodity id
                 Out(10,price);//Price
                 ;Out(10,num);//Number
-                Out(12,date);//Date
+                Out(21,date);//Date
                 //Out(11,seller);//Seller ID
                 Out(10,buyer);//Buyer ID
                 cout << endl;
             }
         }
-        cout<<"==========================================================================="<<endl;
+        cout<<"================================================================================="<<endl;
         if(find == false)
             cout << "Fail to find your order."<<endl;
         cout<<endl<<endl;
@@ -485,8 +469,8 @@ void User::Buyer_check_com()
     else
     {
         bool find = false;
-        cout<<"================================================================================================="<<endl;
-        cout <<"Com ID    Name                          Price     Number  Seller ID  Added Date  State"<<endl;
+        cout<<"======================================================================================================="<<endl;
+        cout <<"Com ID    Name                          Price     Number  Seller ID  Added Date           State"<<endl;
         while (!in.eof() )
         {
             string buffer1,buffer2,buffer3,id,price,num,seller,addedDate,state;
@@ -505,12 +489,12 @@ void User::Buyer_check_com()
                 Out(10,price);
                 Out(8,num);
                 Out(11,seller);
-                Out(12,addedDate);
+                Out(21,addedDate);
                 Out(12,state);
                 cout << endl;
             }   
         }
-        cout<<"================================================================================================="<<endl;
+        cout<<"======================================================================================================="<<endl;
         if(find == false)
             cout <<"Fail to find commodity on auction."<<endl;
         else
@@ -528,8 +512,8 @@ void User::Buyer_check_order()
     else
     {
         bool find = false;
-        cout<<"==========================================================================="<<endl;
-        cout <<"Order ID  Com id  Price     Number    Date        Seller ID  "<<endl; 
+        cout<<"================================================================================="<<endl;
+        cout <<"Order ID  Com id  Price     Number    Date                 Seller ID  "<<endl; 
         while (!in.eof() )
         {
             string buffer,id,com,price,num,date,seller,buyer;
@@ -544,13 +528,13 @@ void User::Buyer_check_order()
                 Out(8,com);//Commodity id
                 Out(10,price);//Price
                 ;Out(10,num);//Number
-                Out(12,date);//Date
+                Out(21,date);//Date
                 Out(11,seller);//Seller ID
                 //Out(10,buyer);//Buyer ID
                 cout << endl;
             }
         }
-        cout<<"==========================================================================="<<endl;
+        cout<<"================================================================================="<<endl;
         if(find == false)
             cout << "Fail to find your order."<<endl;
         cout<<endl<<endl;
@@ -569,8 +553,8 @@ void User::Buyer_search_com()
         bool find = false;
         cout << "Input the name of the commodity you want."<<endl;
         cin >> target;
-        cout<<"================================================================================================="<<endl;
-        cout <<"Com ID    Name                          Price     Number  Seller ID  Added Date"<<endl;
+        cout<<"======================================================================================================="<<endl;
+        cout <<"Com ID    Name                          Price     Number  Seller ID  Added Date         "<<endl;
         while (!in.eof() )
         {
             string buffer1,buffer2,buffer3,id,price,num,seller,date,state;
@@ -589,12 +573,12 @@ void User::Buyer_search_com()
                 Out(10,price);//price
                 Out(8,num);//number
                 Out(11,seller);//seller id
-                Out(12,date);//date
+                Out(21,date);//date
                 //Out(12,state);//state
                 cout << endl;
             }   
         }
-        cout<<"================================================================================================="<<endl;
+        cout<<"======================================================================================================="<<endl;
         if(find == false)
             cout<<"Fail to find the commodity you want. Please check the name."<<endl;
         else

@@ -52,7 +52,7 @@ void Commodity::Set_sellerId(string se_id)
 	com_sellerId = se_id;
 }
 
-bool Commodity::Set_addedDate(int y,int m,int d)  
+bool Commodity::Set_addedDate(int y, int m, int d, int h, int min, int s)  
 {
 	if(y <= 0 || m <= 0 || m >12 || d <= 0)
 		return false;
@@ -70,9 +70,14 @@ bool Commodity::Set_addedDate(int y,int m,int d)
 		else if (d > 28) //not leap year
 			return false; 
 	}
+	if(h < 0 || h > 24 || min < 0 || min > 60 || s < 0 || s > 60)
+		return false;
 	com_addedDate.year = y;
 	com_addedDate.month = m;
 	com_addedDate.day  = d;
+	com_addedDate.hour = h;
+	com_addedDate.minute = min;
+	com_addedDate.second  = s;
 	return true;
 }
 
@@ -90,7 +95,8 @@ void Commodity::PrintAll()
 	cout << "Commodity Number :     " << com_id <<endl;
 	cout << "Commodity Descrption : " << com_description <<endl;
 	cout << "Seller ID :            " << com_sellerId <<endl;
-	cout << "Added Date :           " << com_addedDate.year << "-" << com_addedDate.month <<"-" << com_addedDate.day<<endl;
+	cout << "Added Date :           " << com_addedDate.year << "-" << com_addedDate.month <<"-" << com_addedDate.day
+	<<"-"<<com_addedDate.hour << "-" << com_addedDate.minute <<"-" << com_addedDate.second<<endl;
 	//cout << "Commodity State :      " << com_state <<endl;
 	if(com_state == ONAUCTION)
 		cout << "Commodity State :      " << "ONAUCTION" <<endl;

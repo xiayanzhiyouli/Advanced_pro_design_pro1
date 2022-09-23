@@ -1,90 +1,93 @@
-M001 30.0 5 U001 2022-9-1 ONAUCTION
+M001 30.0 5 U001 2022-9-1-12-0-1 ONAUCTION
 Basic Programme Design
 This book is designed for freshmen of CS;
-M002 78.0 1 U001 2022-9-7 ONAUCTION
+M002 78.0 1 U001 2022-9-7-12-0-2 ONAUCTION
 Calculus
 This book is a necessity for freshmen;
-M003 10.0 2 U002 2022-9-1 ONAUCTION
+M003 10.0 2 U002 2022-9-1-12-0-3 ONAUCTION
 Calculus
 This book is a necessity for freshmen;
-M004 70.0 2 U001 2022-9-5 ONAUCTION
+M004 70.0 2 U001 2022-9-5-12-0-4 ONAUCTION
 Data Struct
 This book enables students to have a better understanding of CS;
-M005 130.0 3 U004 2022-9-19 ONAUCTION
+M005 130.0 3 U004 2022-9-19-12-0-5 ONAUCTION
 SICP
 Hard but fantastic;
-M006 152.0 1 U005 2022-9-18 ONAUCTION
+M006 152.0 1 U005 2022-9-18-12-0-6 ONAUCTION
 SICP
 Hard but fantastic;
-M007 155.0 2 U001 2022-9-16 ONAUCTION
+M007 155.0 2 U001 2022-9-16-12-0-7 ONAUCTION
 The Design of Algorithms 
 Hard in proof but useful in coding;
-M008 120.0 8 U001 2022-9-12 ONAUCTION
+M008 120.0 8 U001 2022-9-12-12-0-8 ONAUCTION
 Graph Theory
 Optional lesson for students;
-M009 10.0 1 U004 2022-9-3 ONAUCTION
+M009 10.0 1 U004 2022-9-3-12-0-9 ONAUCTION
 Discrete Mathematics
 More like a part of maths;
-M010 140.0 3 U003 2022-9-7 ONAUCTION
+M010 140.0 3 U003 2022-9-7-12-0-10 ONAUCTION
 Calculus
 This book is a necessity for freshmen;
-M011 45.7 2 U004 2022-9-17 ONAUCTION
+M011 45.7 2 U004 2022-9-17-12-0-11 ONAUCTION
 Advanced Programming Design
 Object oriented programming;
-M012 98.5 5 U001 2022-9-17 ONAUCTION
+M012 98.5 5 U001 2022-9-17-12-0-12 ONAUCTION
 Linear Algebra
 An important lesson for machcine learning;
-M013 77.6 1 U001 2022-9-15 ONAUCTION
+M013 77.6 1 U001 2022-9-15-12-0-13 ONAUCTION
 Probability Theory
 An important lesson for computer science;
-M014 35.5 1 U007 2022-9-16 ONAUCTION
+M014 35.5 1 U007 2022-9-16-12-0-14 ONAUCTION
 Mathematical Statistics
 An important lesson for computer science;
-M015 31.1 1 U004 2022-9-7 ONAUCTION
+M015 31.1 1 U004 2022-9-7-12-0-15 ONAUCTION
 Calculus
 This book is a necessity for freshmen;
-M016 56.3 2 U001 2022-9-1 ONAUCTION
+M016 56.3 2 U001 2022-9-1-12-0-16 ONAUCTION
 Advanced Programming Design
 Object oriented programming;
-M017 350.1 1 U001 2022-9-13 ONAUCTION
+M017 350.1 1 U001 2022-9-13-12-0-17 ONAUCTION
 Logic Circuit
 About how cpu works;
-M018 21.3 3 U001 2022-9-13 ONAUCTION
+M018 21.3 3 U001 2022-9-13-12-0-18 ONAUCTION
 Experiments of Logic Circuit
 About FPGA;
-M019 99.9 5 U001 2022-9-1 ONAUCTION
+M019 99.9 5 U001 2022-9-1-12-0-19 ONAUCTION
 Computer Architecture
 Very Hard;
-M020 33.4 10 U001 2022-9-4 ONAUCTION
+M020 33.4 10 U001 2022-9-4-12-0-20 ONAUCTION
 Distributed Computing
 An cheap book;
-M021 30.0 1 U002 2022-9-14 ONAUCTION
+M021 30.0 1 U002 2022-9-14-12-0-21 ONAUCTION
 Operating System
 About how os works, especially Linux;
-M022 100.0 3 U002 2022-9-12 ONAUCTION
+M022 100.0 3 U002 2022-9-12-12-0-22 ONAUCTION
 Computer Network
 About how nets work;
-M023 45.7 1 U009 2022-9-2 ONAUCTION
+M023 45.7 1 U009 2022-9-2-12-0-23 ONAUCTION
 Computer Architecture
 Very Hard;
-M024 122.0 5 U009 2022-9-3 ONAUCTION
+M024 122.0 5 U009 2022-9-3-12-0-24 ONAUCTION
 Distributed Computing
 An cheap book;
-M025 45.8 3 U004 2022-9-3 ONAUCTION
+M025 45.8 3 U004 2022-9-3-12-0-25 ONAUCTION
 Operating System
 About how os works, especially Linux;
-M026 34.5 4 U010 2022-9-1 ONAUCTION
+M026 34.5 4 U010 2022-9-1-12-0-26 ONAUCTION
 Machine Learning
 For students who are professional in AI;
-M027 33.3 1 U010 2022-9-7 ONAUCTION
+M027 33.3 1 U010 2022-9-7-12-0-27 ONAUCTION
 Operating System
 About how os works, especially Linux;
-M028 5.7 1 U009 2022-9-7 ONAUCTION
+M028 5.7 1 U009 2022-9-7-12-0-28 ONAUCTION
 Operating System
 About how os works, especially Linux;
-M029 4.5 5 U001 2022-9-1 ONAUCTION
+M029 4.5 5 U001 2022-9-1-12-0-29 ONAUCTION
 Machine Learning
 For students who are professional in AI;
-M030 77.0 2 U008 2022-9-6 ONAUCTION
+M030 77.0 2 U008 2022-9-6-12-0-30 ONAUCTION
 Machine Learning
 For students who are professional in AI;
+M031 1234.5 12 U001 2022-9-23-23-5-58 ONAUCTION
+book for test
+aaa aaaa aaa

@@ -22,8 +22,8 @@ void Admin::Check_commodity()
         cout << "Error opening file"<<endl; 
     else
     {
-        cout<<"================================================================================================="<<endl;
-        cout <<"Com ID    Name                          Price     Number  Seller ID  Added Date  State"<<endl;
+        cout<<"======================================================================================================="<<endl;
+        cout <<"Com ID    Name                          Price     Number  Seller ID  Added Date           State"<<endl;
         while (!in.eof() )
         {
             string buffer1,buffer2,buffer3,temp;
@@ -38,11 +38,11 @@ void Admin::Check_commodity()
             is >> temp;Out(10,temp);//price
             is >> temp;Out(8,temp);//number
             is >> temp;Out(11,temp);//seller id
-            is >> temp;Out(12,temp);//date
+            is >> temp;Out(21,temp);//date
             is >> temp;Out(12,temp);//state
             cout << endl;  
         }
-        cout<<"================================================================================================="<<endl;
+        cout<<"======================================================================================================="<<endl;
         cout<<endl<<endl;
         in.close();
     }
@@ -59,8 +59,8 @@ void Admin::Search_commodity()
         bool find = false;
         cout << "Input the name of the commodity you want."<<endl;
         cin >> target;
-        cout<<"================================================================================================="<<endl;
-        cout <<"Com ID    Name                          Price     Number  Seller ID  Added Date  State"<<endl;
+        cout<<"======================================================================================================="<<endl;
+        cout <<"Com ID    Name                          Price     Number  Seller ID  Added Date           State"<<endl;
         while (!in.eof() )
         {
             string buffer1,buffer2,buffer3,temp;
@@ -78,12 +78,12 @@ void Admin::Search_commodity()
                 is >> temp;Out(10,temp);//price
                 is >> temp;Out(8,temp);//number
                 is >> temp;Out(11,temp);//seller id
-                is >> temp;Out(12,temp);//date
+                is >> temp;Out(21,temp);//date
                 is >> temp;Out(12,temp);//state
                 cout << endl;
             }   
         }
-        cout<<"================================================================================================="<<endl;
+        cout<<"======================================================================================================="<<endl;
         if(find == false)
             cout<<"Fail to find the commodity you want. Please check the name."<<endl;
         else
@@ -163,7 +163,7 @@ void Admin::Remove_commodity()
         else
         {
             in.close();
-            cout <<"=========================================================================="<<endl;
+            cout <<"================================================================================"<<endl;
             cout <<"ID:          "<<target[0]<<endl;
             cout <<"Price:       "<<target[1]<<endl;
             cout <<"Number:      "<<target[2]<<endl;
@@ -171,7 +171,7 @@ void Admin::Remove_commodity()
             cout <<"Added Date:  "<<target[4]<<endl;
             cout <<"Name:        "<<target[5]<<endl;
             cout <<"Description: "<<target[6]<<endl;
-            cout <<"=========================================================================="<<endl;
+            cout <<"================================================================================"<<endl;
             cout<<"Do you want to remove this?"<<endl;
             cout<<"Press 'y' to confirm, or it will not be removed."<<endl;
             string confirm_str;
@@ -198,8 +198,8 @@ void Admin::Check_order()
         cout << "Error opening file"<<endl; 
     else
     {
-        cout<<"==========================================================================="<<endl;
-        cout <<"Order ID  Com id  Price     Number    Date        Seller ID  Buyer ID"<<endl; 
+        cout<<"================================================================================="<<endl;
+        cout <<"Order ID  Com id  Price     Number    Date                 Seller ID  Buyer ID"<<endl; 
         while (!in.eof() )
         {
             string buffer,temp;
@@ -210,12 +210,12 @@ void Admin::Check_order()
             is >> temp;Out(8,temp);//Commodity id
             is >> temp;Out(10,temp);//Price
             is >> temp;Out(10,temp);//Number
-            is >> temp;Out(12,temp);//Date
+            is >> temp;Out(21,temp);//Date
             is >> temp;Out(11,temp);//Seller ID
             is >> temp;Out(10,temp);//Buyer ID
             cout << endl;
         }
-        cout<<"==========================================================================="<<endl;
+        cout<<"================================================================================="<<endl;
         cout<<endl<<endl;
     }
     in.close();
@@ -228,7 +228,7 @@ void Admin::Check_user()
         cout << "Error opening file"<<endl; 
     else
     {
-        cout<<"============================================================================================================="<<endl;
+        cout<<"==================================================================================================================="<<endl;
         cout <<"ID    Name        Tele                  Passport              Balance     State     Address"<<endl;
         while (!in.eof() )
         {
@@ -247,7 +247,7 @@ void Admin::Check_user()
             Out(40,buffer2); //name
             cout << endl;
         }
-        cout<<"============================================================================================================="<<endl;
+        cout<<"==================================================================================================================="<<endl;
         cout<<endl<<endl;
     }
     in.close();
@@ -319,13 +319,13 @@ void Admin::Ban_user()
         else
         {
             in.close();
-            cout <<"==========================================================="<<endl;
+            cout <<"================================================================="<<endl;
             cout << "ID      :"<<target[0]<<endl;
             cout << "Name    :"<<target[1]<<endl;
             cout << "Tele    :"<<target[2]<<endl;
             cout << "Balance :"<<target[4]<<endl;
             cout << "Address :"<<target[5]<<endl;
-            cout <<"==========================================================="<<endl;
+            cout <<"================================================================="<<endl;
             cout<<"Do you want to ban this user?"<<endl;
             cout<<"Press 'y' to confirm, or he/she will not be banned."<<endl;
             string confirm_str;

@@ -14,6 +14,9 @@ struct OrderDate
 	int year;
 	int month;
 	int day;
+	int hour;
+	int minute;
+	int second;
 };
 
 class Order
@@ -28,6 +31,9 @@ public:
 		order_date.year = 1980;
 		order_date.month = 6;
 		order_date.day = 1;
+		order_date.hour = 12;
+		order_date.minute = 0;
+		order_date.second = 0;
 		order_seller_id = "Not Setted";
 		order_buyer_id = "Not Setted";		
 	}
@@ -44,7 +50,7 @@ public:
 	bool Set_com_id(string str);
 	bool Set_price(double price);
 	bool Set_num(int num);
-	bool Set_order_date(int y,int m,int d);
+	bool Set_order_date(int y, int m, int d, int h, int min, int s);
 	bool Set_seller_id(string str);
 	bool Set_buyer_id(string str);
 	void PrintAll();
@@ -52,8 +58,9 @@ public:
 	friend ostream& operator << (ostream& os, const Order od)
 	{
 		return os << od.order_id << "  " << od.order_com_id << setw(10) << od.order_price << setw(5) 
-		<< od.order_num << " "<<od.order_date.year << "-"<< od.order_date.month <<"-"<<od.order_date.day<<" "
-		<< od.order_seller_id << " "<< od.order_buyer_id <<endl;
+		<< od.order_num << " "<<od.order_date.year << "-"<< od.order_date.month <<"-"<<od.order_date.day
+		<<"-"<<od.order_date.hour << "-"<< od.order_date.minute <<"-"<<od.order_date.second
+		<<" "<< od.order_seller_id << " "<< od.order_buyer_id <<endl;
 	};
 	
 private:

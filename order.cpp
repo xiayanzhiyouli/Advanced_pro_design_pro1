@@ -47,7 +47,7 @@ bool Order::Set_num(int num)
 	return false;
 }
 
-bool Order::Set_order_date(int y,int m,int d) 
+bool Order::Set_order_date(int y, int m, int d, int h, int min, int s) 
 {
 	if(y <= 0 || m <= 0 || m >12 || d <= 0)
 		return false;
@@ -65,9 +65,14 @@ bool Order::Set_order_date(int y,int m,int d)
 		else if (d > 28) //not leap year
 			return false; 
 	}
+	if(h < 0 || h > 24 || min < 0 || min > 60 || s < 0 || s > 60)
+		return false;
 	order_date.year = y;
 	order_date.month = m;
 	order_date.day  = d;
+	order_date.hour = h;
+	order_date.minute = min;
+	order_date.second  = s;
 	return true;
 }
 
@@ -98,7 +103,8 @@ void Order::PrintAll()
 	cout << "Commodity ID  : "<< order_com_id <<endl;
 	cout << "Price         : "<< order_price <<endl;
 	cout << "Num           : "<< order_num <<endl;
-	cout << "Trade Date    : "<< order_date.year << "-" << order_date.month << "-" << order_date.day <<endl;
+	cout << "Trade Date    : "<< order_date.year << "-" << order_date.month << "-" << order_date.day 
+	<<"-"<< order_date.hour << "-" << order_date.minute << "-" << order_date.second<<endl;
 	cout << "Seller ID     : "<< order_seller_id <<endl;
 	cout << "Buyer ID      : "<< order_buyer_id <<endl;
 	cout << "==========================================="<<endl;

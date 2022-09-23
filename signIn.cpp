@@ -27,8 +27,8 @@ void Personal_recharge();
 void Personal_change();
 
 
-Admin* p2ad = new Admin;
-User* p2us = new User;
+extern Admin* p2ad;
+extern User* p2us;
 
 void signin()
 {
@@ -292,6 +292,7 @@ void User_main()
 
 void Buyer_main()
 {
+    string buffer;
     while(1)
     {
         system("clear");
@@ -333,13 +334,15 @@ void Buyer_main()
         else 
         {
             cout <<"Wrong number!"<<endl;
-            sleep(1);
         }
+        cout <<"Input any key to continue."<<endl;
+        cin >> buffer;
     }
 }
 
 void Seller_main()
 {
+    string buffer;
     while(1)
     {
         system("clear");
@@ -381,13 +384,15 @@ void Seller_main()
         else 
         {
             cout <<"Wrong number!"<<endl;
-            sleep(1);
         }
+        cout <<"Input any key to continue."<<endl;
+        cin >> buffer;
     }
 }
 
 void Personal_information()
 {
+    string buffer;
     while(1)
     {
         system("clear");
@@ -404,9 +409,6 @@ void Personal_information()
         if(input == "1")
         {
             p2us->PrintAll();
-            cout <<"Press any key to back."<<endl;
-            string any_key;
-            cin >> any_key;
         }
         else if(input == "2")
         {
@@ -423,8 +425,9 @@ void Personal_information()
         else 
         {
             cout <<"Wrong number!"<<endl;
-            sleep(1);
         }
+        cout <<"Input any key to continue."<<endl;
+        cin >> buffer;
     }
 }
 
@@ -608,8 +611,10 @@ void Personal_recharge()
 
 void Administrator_main()
 {
+    string buffer;
     while(1)
     {
+        system("clear");
         cout <<"==========================================="<<endl;
         cout <<"1: Check all the commodities"<<endl;
         cout <<"2: Search for commodities"<<endl;
@@ -654,8 +659,8 @@ void Administrator_main()
         else
         {
             cout << "The number you inputed is wrong. Please check it."<<endl<<endl;
-            sleep(1);
-            system("clear");
         }
+        cout <<"Input any key to continue."<<endl;
+        cin >> buffer;
     }
 }

@@ -16,6 +16,9 @@ struct ComDate
 	int year;
 	int month;
 	int day;
+	int hour;
+	int minute;
+	int second;
 };
 class Commodity
 {
@@ -31,6 +34,9 @@ public:
 		com_addedDate.year = 1980;
 		com_addedDate.month = 6;
 		com_addedDate.day = 1;
+		com_addedDate.hour = 12;
+		com_addedDate.minute = 0;
+		com_addedDate.second = 0;
 		com_state = ONAUCTION;	
 	};
 	
@@ -49,7 +55,7 @@ public:
 	bool Set_num (int num);
 	void Set_description(string des);
 	void Set_sellerId(string se_id);
-	bool Set_addedDate(int y, int m, int d);
+	bool Set_addedDate(int y, int m, int d, int h, int min, int s);
 	void Set_state(CommodityState cs);	
 	void PrintAll();
 
@@ -57,7 +63,8 @@ public:
 	{
 		os << com.com_id << "  " << setw(10) << com.com_name << setw(10) << com.com_price << setw(5) 
 		<< com.com_num << " "<<com.com_sellerId << " " 
-		<< com.com_addedDate.year << "-"<<com.com_addedDate.month << "-"<<com.com_addedDate.day;
+		<< com.com_addedDate.year << "-"<<com.com_addedDate.month << "-"<<com.com_addedDate.day
+		<<"-"<< com.com_addedDate.hour << "-"<<com.com_addedDate.minute << "-"<<com.com_addedDate.second;
 
 		if(com.com_state == ONAUCTION)
 			os << "  ONAUCTION" <<endl;
