@@ -19,6 +19,7 @@ using namespace std;
 #define Out(X,Y);  cout.width(X);cout.flags(ios::left);cout << Y;
 
 extern Time* p2te;
+extern User* p2us;
 
 bool User::Set_id(string str) 
 {
@@ -591,4 +592,125 @@ void User::Buyer_search_com()
 void User::Buyer_buy_com()
 {
     //TO DO
+    string id,price,num,seller,date,state,name,description;
+    string buy_num,buy_price,buy_time;
+    cout <<"Input ID of the commodity you want to buy."<<endl;
+    cin >> id;
+    ifstream in("commodity_info.txt");
+    if (!in.is_open())
+    {
+        cout << "Error opening file"<<endl; 
+        return;
+    }
+
+    bool find = false;
+    while (!in.eof() )
+    {
+        string buffer1,buffer2,buffer3,temp_id,temp_price,temp_num,temp_seller,temp_date,temp_state;
+        getline(in,buffer1);// main info except name and description;
+        getline(in,buffer2);//name
+        getline(in,buffer3);//description 
+
+        istringstream is(buffer1);
+        is >> temp_id;is >> temp_price;is >> temp_num;is >> temp_seller;is >> temp_date;is >> temp_state;
+        
+        if(temp_id == id && temp_state == "ONAUCTION" && p2us->Get_id() != temp_seller)
+        {
+            find = true;
+            id = temp_id;
+            price = temp_price;
+            num = temp_num;
+            seller = temp_seller;
+            date = temp_date;
+            state = temp_state;
+            name = buffer2;
+            description = buffer3;
+            break;
+        }   
+    }
+
+    if(find == false)
+    {
+        cout <<"Fail to find other sellers' commodities on auction."<<endl;
+        return;
+    }
+    
+    cout <<"=========================================="<<endl;
+    cout <<"ID:          "<<id<<endl;
+    cout <<"Name:        "<<name<<endl;
+    cout <<"Price:       "<<price<<endl;
+    cout <<"Number:      "<<num<<endl;
+    cout <<"Seller ID:   "<<seller<<endl;
+    cout <<"Added Date:  "<<date<<endl;
+    cout <<"Description: "<<description<<endl;
+    cout <<"=========================================="<<endl;
+    cout<<endl<<endl;
+    in.close();
+
+    cout <<"Input the number you want to buy."<<endl;
+    cin >> buy_num;
+    if(stoi(buy_num) > stoi(num))
+    {
+        cout << "You can not buy more commodities than what the seller have."<<endl;
+        return;
+    }
+
+    cout <<"Input the price you can afford."<<endl;
+    cin >> buy_price;
+
+    if(stod(buy_price) < stod(price))
+    {
+        cout << "Your price must be higher than "<<price<<"."<<endl;
+        return;
+    }
+
+    if(stoi(buy_num)*stod(buy_price) > p2us->Get_balance())
+    {
+        cout << "You can not afford them."<<endl;
+        return;
+    }
+
+
+    p2te->Reset();
+    buy_time = p2te->GetStrAll();
+
+    string res;
+    res = id; res += " ";//commodity id
+    res += p2us->Get_id(); res += " ";//buyer id
+    res += seller; res += " ";//seller id
+    res += buy_num; res += " ";
+    res += buy_price; res += " ";
+    res += buy_time;
+
+
+    string all_content;
+    ifstream temp("intention_info.txt");
+    if (!temp.is_open())
+    {
+        cout << "Error opening file"<<endl; 
+        return;
+    }
+
+    while (!temp.eof() )
+    {
+        string buffer;
+        getline(temp,buffer);
+        all_content += buffer;
+        all_content += "\n";
+    }
+    temp.close();
+
+    if(all_content == "\n")
+        all_content = res;//empty file.
+    else
+        all_content += res;
+        
+    ofstream out("intention_info.txt");
+    out.flush();
+    out << all_content;
+    out.close();
+
+    cout << "Success!"<<endl;
+    cout << "You will get commodities if there are enough commodities or your price is higher than others."<<endl;
+    cout << "You can delete this before the deadline for this trading."<<endl;
 }
