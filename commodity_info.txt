@@ -4,13 +4,13 @@ This book is designed for freshmen of CS;
 M002 78.0 1 U001 2022-9-7-12-0-2 ONAUCTION
 Calculus
 This book is a necessity for freshmen;
-M003 10.0 2 U002 2022-9-1-12-0-3 ONAUCTION
+M003 10.0 2 U002 2022-9-25-17-37-59 ONAUCTION
 Calculus
 This book is a necessity for freshmen;
 M004 70.0 2 U001 2022-9-5-12-0-4 ONAUCTION
 Data Struct
 This book enables students to have a better understanding of CS;
-M005 130.0 3 U004 2022-9-19-12-0-5 ONAUCTION
+M005 130.0 3 U004 2022-9-25-17-37-59 ONAUCTION
 SICP
 Hard but fantastic;
 M006 152.0 1 U005 2022-9-18-12-0-6 ONAUCTION

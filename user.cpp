@@ -12,6 +12,8 @@
 
 #include <unistd.h>
 
+#include "refresh.h"
+
 using namespace std;
 
 #define is_num(X) (X >= '0' && X <= '9')
@@ -591,7 +593,6 @@ void User::Buyer_search_com()
 
 void User::Buyer_buy_com()
 {
-    //TO DO
     string id,price,num,seller,date,state,name,description;
     string buy_num,buy_price,buy_time;
     cout <<"Input ID of the commodity you want to buy."<<endl;
@@ -647,6 +648,15 @@ void User::Buyer_buy_com()
     cout<<endl<<endl;
     in.close();
 
+    p2te->Reset();
+    buy_time = p2te->GetStrAll();
+
+    if(my_JudgeExpire(date,buy_time))//expired.
+    {
+        cout << "The commodity you chose is expired now."<<endl;
+        return;
+    }
+
     cout <<"Input the number you want to buy."<<endl;
     cin >> buy_num;
     if(stoi(buy_num) > stoi(num))
@@ -671,16 +681,14 @@ void User::Buyer_buy_com()
     }
 
 
-    p2te->Reset();
-    buy_time = p2te->GetStrAll();
-
-    string res;
+    string res,duetimeStr;
     res = id; res += " ";//commodity id
     res += p2us->Get_id(); res += " ";//buyer id
     res += seller; res += " ";//seller id
     res += buy_num; res += " ";
     res += buy_price; res += " ";
-    res += buy_time;
+    res += buy_time; res += " ";
+    res += date;//the date here means the commodity's added date.
 
 
     string all_content;
@@ -704,7 +712,7 @@ void User::Buyer_buy_com()
         all_content = res;//empty file.
     else
         all_content += res;
-        
+
     ofstream out("intention_info.txt");
     out.flush();
     out << all_content;

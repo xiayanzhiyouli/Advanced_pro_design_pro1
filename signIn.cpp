@@ -12,19 +12,10 @@
 
 #include "admin.h"
 #include "user.h"
+#include "signIn.h"
 
 using namespace std;
 
-void Administrator_login();
-void Administrator_main();
-void User_register();
-void User_login();
-void User_main();
-void Buyer_main();
-void Seller_main();
-void Personal_information();
-void Personal_recharge();
-void Personal_change();
 
 
 extern Admin* p2ad;
