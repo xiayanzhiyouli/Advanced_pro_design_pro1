@@ -1,7 +1,7 @@
 M001 30.0 5 U001 2022-9-1-12-0-1 ONAUCTION
 Basic Programme Design
 This book is designed for freshmen of CS;
-M002 78.0 1 U001 2022-9-7-12-0-2 ONAUCTION
+M002 78.0 3 U006 2022-9-26-23-43-2 ONAUCTION
 Calculus
 This book is a necessity for freshmen;
 M003 10.0 2 U002 2022-9-25-17-37-59 ONAUCTION

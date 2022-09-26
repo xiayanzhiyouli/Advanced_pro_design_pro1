@@ -4,7 +4,7 @@ main.o: main.cpp order.h user.h commodity.h admin.h time.h signIn.h refresh.h
 	g++ -c $<
 order.o: order.cpp order.h
 	g++ -c $<
-user.o: user.cpp user.h refresh.h
+user.o: user.cpp user.h 
 	g++ -c $<
 commodity.o: commodity.cpp commodity.h
 	g++ -c $<

@@ -56,8 +56,12 @@ double my_CheckBalance(const string& a);
 int my_CheckComNum(const string& a);
 //chek commodity's num before the trade is done.
 
-void my_ScanIntention();
+bool my_ScanIntention();
 //only choose an expired commodity to trade once.
+//return true if find intention for trading, false otherwise.
+
+void my_RefreshIntention();
+//refresh the file intention.txt.
 
 void my_ReduceComNum(const string& a, int n);
 //reduce commodity's num after the trade was done.

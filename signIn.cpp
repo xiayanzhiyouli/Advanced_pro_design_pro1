@@ -13,6 +13,7 @@
 #include "admin.h"
 #include "user.h"
 #include "signIn.h"
+#include "refresh.h"
 
 using namespace std;
 
@@ -26,6 +27,7 @@ void signin()
     cout << "  Commodity Trading Plattform  "<<endl;
     cout << "  Xia Yan 201220077 NJUCS"<<endl;
     cout << endl<<endl;
+    my_RefreshIntention();
     sleep(1);
 }
 
@@ -34,6 +36,7 @@ void main_platform()
     while(1)
     {
         system("clear");
+        my_RefreshIntention();
         cout <<"==========================================="<<endl;
         cout <<"1: Administrator Login"<<endl;
         cout <<"2: User Register"<<endl;
@@ -298,6 +301,7 @@ void Buyer_main()
         string input;
         cout <<"Input the number you want."<<endl;
         cin >> input;
+        my_RefreshIntention();
         if(input == "1")
         {
             p2us->Buyer_check_com();
@@ -348,6 +352,7 @@ void Seller_main()
         string input;
         cout <<"Input the number you want."<<endl;
         cin >> input;
+        my_RefreshIntention();
         if(input == "1")
         {
             p2us->Seller_release_com();
@@ -396,7 +401,7 @@ void Personal_information()
         string input;
         cout << "Input the number you want"<<endl;
         cin >>input;
-
+        my_RefreshIntention();
         if(input == "1")
         {
             p2us->PrintAll();
@@ -438,6 +443,7 @@ void Personal_change()
         string input,all_content;
         bool success = true;
         cin >> input;
+        my_RefreshIntention();
         if(input == "1")
         {
             cout <<"Please input your new name."<<endl;
@@ -548,6 +554,7 @@ void Personal_recharge()
     cout << "Please input the amount of money."<<endl;
     double charge;
     cin >> charge;
+    my_RefreshIntention();
     p2us->Set_balance(p2us->Get_balance() + charge);
     cout <<"Charge successfully!"<<endl;
     cout <<"Your balance is :"<<p2us->Get_balance()<<endl;
@@ -619,6 +626,7 @@ void Administrator_main()
         string input;
         cout << "Input the number of the operation you want."<<endl<<endl;
         cin >> input;
+        my_RefreshIntention();
         if(input == "1")
         {
             p2ad->Check_commodity();

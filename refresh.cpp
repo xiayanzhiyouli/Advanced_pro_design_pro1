@@ -292,7 +292,7 @@ int my_CheckComNum(const string& a)
     return stoi(res);
 }
 
-void my_ScanIntention()
+bool my_ScanIntention()
 {
     intention* p = new intention[INTENTION_BUFFER_SIZE];
     int cnt = 0;
@@ -305,7 +305,7 @@ void my_ScanIntention()
     if (!in.is_open())
     {
         cout << "Error opening file"<<endl;
-        return; 
+        return false; 
     }
         
     while (!in.eof() )
@@ -326,6 +326,10 @@ void my_ScanIntention()
     }
     in.close();
     
+    if(!find)
+        return false;
+    //can not find any intention to trade.
+
     //second ergodic of the file.
     //find all the buyers of this expired commodity.
     string all_content;
@@ -333,7 +337,7 @@ void my_ScanIntention()
     if (!collect.is_open())
     {
         cout << "Error opening file"<<endl;
-        return; 
+        return false; 
     }
         
     while (!collect.eof() )
@@ -387,6 +391,13 @@ void my_ScanIntention()
     UpdateCom(p,deal_num);
     UpdateOrder(p,deal_num);
     //intention_info.txt has been updated.
+
+    return true;
+}
+
+void my_RefreshIntention()
+{
+    while(my_ScanIntention());
 }
 
 void my_ReduceComNum(const string& a, int n)
@@ -460,5 +471,57 @@ void UpdateCom(intention* p,int cnt)
 
 void UpdateOrder(intention* p,int cnt)
 {
+    ifstream in("order_info.txt");
+    if (!in.is_open())
+    {
+        cout << "Error opening file"<<endl; 
+        in.close();
+        return;
+    }
+
+    string all_content,lastIdStr;
+    int lastIdInt;
+
+    while (!in.eof() )
+    {
+        string buffer,temp;
+        getline(in,buffer);
+
+        istringstream is(buffer);
+
+        is >> lastIdStr;
+       
+        all_content += buffer;
+        all_content += "\n";
+    }
+    in.close();
+
+    for(int i = 0;i < cnt;++i)
+    {
+        lastIdInt = stoi(lastIdStr.substr(1,3));
+        lastIdStr = to_string(++lastIdInt);
+
+        if(lastIdStr.length() == 3)
+            lastIdStr = "M" + lastIdStr;
+        if(lastIdStr.length() == 2)
+            lastIdStr = "M0" + lastIdStr;
+        if(lastIdStr.length() == 1)
+            lastIdStr = "M00" + lastIdStr;
+
+        all_content += lastIdStr; all_content += " ";
+        all_content += p[i].com_id; all_content += " ";
+        all_content += to_string(p[i].price); all_content += " ";
+        all_content += to_string(p[i].num); all_content += " ";
+        p2te->Reset();
+        all_content += p2te->GetStrAll(); all_content += " ";
+        all_content += p[i].seller_id; all_content += " ";
+        all_content += p[i].buyer_id; all_content += "\n";
+    }
+
+    all_content = all_content.substr(0,all_content.length() -1);//delete the last '\n'.
+    ofstream out("order_info.txt");
+    out.flush();
+    out << all_content;
+    out.close();
     return;
 }
