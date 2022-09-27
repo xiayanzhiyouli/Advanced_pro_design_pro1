@@ -139,6 +139,11 @@ void my_Deduction(const string& a,double n)
     {
         string buffer1,buffer2;
         getline(in,buffer1);// main info except address;
+        if(buffer1.length() == 0)
+        {
+            in.close();
+            return;
+        }
         getline(in,buffer2);//address
         istringstream is(buffer1);
 
@@ -153,7 +158,8 @@ void my_Deduction(const string& a,double n)
             is >> balance; 
             double d_balance = stod(balance);
             d_balance -= n;
-            all_content += to_string(d_balance); all_content += " ";
+            balance = to_string(d_balance); 
+            all_content += balance.substr(0,balance.length() - 5); all_content += " ";
 
             is >> state; all_content += state; all_content += "\n";
             all_content += buffer2; all_content += "\n";
@@ -189,6 +195,11 @@ void my_Remittance(const string& a,double n)
     {
         string buffer1,buffer2;
         getline(in,buffer1);// main info except address;
+        if(buffer1.length() == 0)
+        {
+            in.close();
+            return;
+        }
         getline(in,buffer2);//address
         istringstream is(buffer1);
 
@@ -203,7 +214,8 @@ void my_Remittance(const string& a,double n)
             is >> balance; 
             double d_balance = stod(balance);
             d_balance += n;
-            all_content += to_string(d_balance); all_content += " ";
+            balance = to_string(d_balance);
+            all_content += balance.substr(0,balance.length() - 5); all_content += " ";
 
             is >> state; all_content += state; all_content += "\n";
             all_content += buffer2; all_content += "\n";
@@ -240,6 +252,11 @@ double my_CheckBalance(const string& a)
     {
         string buffer1,buffer2;
         getline(in,buffer1);// main info except address;
+        if(buffer1.length() == 0)
+        {
+            in.close();
+            return -1;
+        }
         getline(in,buffer2);//address
         istringstream is(buffer1);
 
@@ -274,6 +291,11 @@ int my_CheckComNum(const string& a)
     {
         string buffer1,buffer2,buffer3,temp;
         getline(in,buffer1);
+        if(buffer1.length() == 0)
+        {
+            in.close();
+            return -1;
+        }
         getline(in,buffer2);
         getline(in,buffer3);
 
@@ -289,7 +311,8 @@ int my_CheckComNum(const string& a)
     }
     in.close();
 
-    return stoi(res);
+    int test = stoi(res);
+    return test;
 }
 
 bool my_ScanIntention()
@@ -308,10 +331,20 @@ bool my_ScanIntention()
         return false; 
     }
         
+    if(in.eof())
+        return false;
+
     while (!in.eof() )
     {
         string buffer;
         getline(in,buffer);
+
+        if(buffer.length() == 0)
+        {
+            in.close();
+            return false;
+        }
+
         istringstream is(buffer);
 
         is >> com; is >> buyer; is >> seller;
@@ -378,20 +411,23 @@ bool my_ScanIntention()
     IntentionSort(p,cnt);
     //sort all the buyers.
     //bigger -> smaller.
-
     int sum = 0,deal_num = 0;
     for(int i = 0;i < cnt;++i)
     {
         sum += p[i].num;
-        if(sum < stoi(num))
+        if(sum <= my_CheckComNum(com))
             ++deal_num;
     }
 
     UpdateUser(p,deal_num);
+    
     UpdateCom(p,deal_num);
+    
     UpdateOrder(p,deal_num);
+    
     //intention_info.txt has been updated.
 
+    delete[] p;//am necessity.
     return true;
 }
 
@@ -416,6 +452,11 @@ void my_ReduceComNum(const string& a, int n)
     {
         string buffer1,buffer2,buffer3;
         getline(in,buffer1);
+        if(buffer1.length() == 0)
+        {
+            in.close();
+            return;
+        }
         getline(in,buffer2);
         getline(in,buffer3);
         istringstream is(buffer1);
@@ -487,6 +528,12 @@ void UpdateOrder(intention* p,int cnt)
         string buffer,temp;
         getline(in,buffer);
 
+        if(buffer.length() == 0)
+        {
+            in.close();
+            break;
+        }
+
         istringstream is(buffer);
 
         is >> lastIdStr;
@@ -502,15 +549,17 @@ void UpdateOrder(intention* p,int cnt)
         lastIdStr = to_string(++lastIdInt);
 
         if(lastIdStr.length() == 3)
-            lastIdStr = "M" + lastIdStr;
+            lastIdStr = "T" + lastIdStr;
         if(lastIdStr.length() == 2)
-            lastIdStr = "M0" + lastIdStr;
+            lastIdStr = "T0" + lastIdStr;
         if(lastIdStr.length() == 1)
-            lastIdStr = "M00" + lastIdStr;
+            lastIdStr = "T00" + lastIdStr;
 
         all_content += lastIdStr; all_content += " ";
         all_content += p[i].com_id; all_content += " ";
-        all_content += to_string(p[i].price); all_content += " ";
+
+        string ShortPrice = to_string(p[i].price);
+        all_content += ShortPrice.substr(0,ShortPrice.length() - 5); all_content += " ";
         all_content += to_string(p[i].num); all_content += " ";
         p2te->Reset();
         all_content += p2te->GetStrAll(); all_content += " ";

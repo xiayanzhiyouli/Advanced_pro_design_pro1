@@ -104,79 +104,89 @@ void User_register()
     {
         cout << "Error opening file"<<endl; 
         in.close();
+        return;
     }
+
+    while (!in.eof() )
+    {
+        string buffer1,buffer2;
+        getline(in,buffer1);// main info except address;
+        if(buffer1.length() == 0)
+        {
+            last_str_id = "None";
+            break;
+        }
+        getline(in,buffer2);//address
+
+        all_content += buffer1; all_content += "\n";
+        all_content += buffer2; all_content += "\n";
+
+        istringstream is(buffer1);
+        is >> last_str_id; 
+    }
+    in.close();
+
+    if(last_str_id == "None")
+        id = "U001";
     else
     {
-        while (!in.eof() )
-        {
-            string buffer1,buffer2;
-            getline(in,buffer1);// main info except address;
-            getline(in,buffer2);//address
-
-            all_content += buffer1; all_content += "\n";
-            all_content += buffer2; all_content += "\n";
-
-            istringstream is(buffer1);
-            is >> last_str_id; 
-        }
-        in.close();
         int last_num_id = stoi(last_str_id.substr(1,3));
         id = "U" + to_string(last_num_id + 1);
-        cout << "Please input your name."<<endl;
-        cin >> name;
-        cout << "Please input your telephone number."<<endl;
-        cin >> tele;
-        cout << "Please input your address:"<<endl;
-        getline(cin,addr);//cin do not work here; 
-        getline(cin,addr);//another getline is a necessity here.
-        cout << "Please input your password."<<endl;
+    }
+
+    cout << "Please input your name."<<endl;
+    cin >> name;
+    cout << "Please input your telephone number."<<endl;
+    cin >> tele;
+    cout << "Please input your address:"<<endl;
+    getline(cin,addr);//cin do not work here; 
+    getline(cin,addr);//another getline is a necessity here.
+    cout << "Please input your password."<<endl;
+    cin >> password1;
+    cout << "Please input your password again."<<endl;
+    cin >> password2;
+
+    while(password1 != password2)
+    {
+        cout << "Please check your password and input it correctly."<<endl;
         cin >> password1;
         cout << "Please input your password again."<<endl;
         cin >> password2;
-
-        while(password1 != password2)
-        {
-            cout << "Please check your password and input it correctly."<<endl;
-            cin >> password1;
-            cout << "Please input your password again."<<endl;
-            cin >> password2;
-        }
-
-        cout<<"======================================="<<endl;
-        cout<<"ID:"<<id<<endl;
-        cout<<"Name:"<<name<<endl;
-        cout<<"Tele:"<<tele<<endl;
-        cout<<"Password:"<<password1<<endl;
-        cout<<"Address:"<<addr<<endl;
-        cout<<"======================================="<<endl<<endl;
-
-        string to_confirm;
-        cout << "Press 'y' to confirm your information, or press any key except 'y' to abort."<<endl;
-        cin >> to_confirm;
-        if(to_confirm == "y" || to_confirm == "Y")
-        {
-            all_content += id; all_content += " ";
-            all_content += name; all_content += " ";
-            all_content += tele; all_content += " ";
-            all_content += password1; all_content += " ";
-            all_content += "0 ";
-            all_content += "ACTIVE\n";
-            all_content += addr;
-            ofstream out("user_info.txt");
-            out.flush();
-            out << all_content;
-            out.close();
-
-            cout << "You have successfully register a new user."<<endl;
-            sleep(1);
-        }
-        else
-        {
-            cout << "You have successfully abort this operation."<<endl;
-            sleep(1);
-        }
-
     }
+
+    cout<<"======================================="<<endl;
+    cout<<"ID:"<<id<<endl;
+    cout<<"Name:"<<name<<endl;
+    cout<<"Tele:"<<tele<<endl;
+    cout<<"Password:"<<password1<<endl;
+    cout<<"Address:"<<addr<<endl;
+    cout<<"======================================="<<endl<<endl;
+
+    string to_confirm;
+    cout << "Press 'y' to confirm your information, or press any key except 'y' to abort."<<endl;
+    cin >> to_confirm;
+    if(to_confirm == "y" || to_confirm == "Y")
+    {
+        all_content += id; all_content += " ";
+        all_content += name; all_content += " ";
+        all_content += tele; all_content += " ";
+        all_content += password1; all_content += " ";
+        all_content += "0 ";
+        all_content += "ACTIVE\n";
+        all_content += addr;
+        ofstream out("user_info.txt");
+        out.flush();
+        out << all_content;
+        out.close();
+
+        cout << "You have successfully register a new user."<<endl;
+        sleep(1);
+        return;
+    }
+
+    cout << "You have successfully abort this operation."<<endl;
+    sleep(1);
+    return;  
 }
 
 void User_login()
@@ -194,56 +204,67 @@ void User_login()
     {
         cout << "Error opening file"<<endl; 
         in.close();
+        return;
     }
-    else
+
+    bool find_user = false;
+    while (!in.eof() )
     {
-        bool find_user = false;
-        while (!in.eof() )
+        string buffer1,buffer2;
+        getline(in,buffer1);// main info except address;
+        if(buffer1.length() == 0)
         {
-            string buffer1,buffer2;
-            getline(in,buffer1);// main info except address;
-            getline(in,buffer2);//address
+            cout<<endl;
+            cout << "No User!"<<endl<<endl;
+            sleep(1);
+            in.close();
+            return;
+        }
+        getline(in,buffer2);//address
 
-            istringstream is(buffer1);
-            is >> id; 
-            if(id == log_id)
-            {
-                find_user = true;
-                is >> name; is >> tele; is >> password; is >> balance; is >> state; 
-                addr = buffer2;
-                break;
-            }      
-        }
-        in.close();
-        if(find_user == false)
+        istringstream is(buffer1);
+        is >> id; 
+        if(id == log_id)
         {
-            cout << "Fail to find your ID!"<<endl;
-            sleep(1);
-        }
-        else if(password != log_password)
-        {
-            cout << "Wrong password!"<<endl;
-            sleep(1);
-        }
-        else if(state != "ACTIVE")
-        {
-            cout << "You have been banned!"<<endl;
-            sleep(1);
-        }
-        else
-        {
-            p2us->Set_id(id);
-            p2us->Set_name(name);
-            p2us->Set_tele(tele);
-            p2us->Set_password(password);
-            p2us->Set_balance(stod(balance));
-            p2us->Set_addr(addr);
-            cout << "Login successfully!"<<endl;
-            sleep(1);
-            User_main();
-        }
-
+            find_user = true;
+            is >> name; is >> tele; is >> password; is >> balance; is >> state; 
+            addr = buffer2;
+            break;
+        }      
     }
+    in.close();
+    if(find_user == false)
+    {
+        cout << "Fail to find your ID!"<<endl;
+        sleep(1);
+        return;
+    }
+
+    if(password != log_password)
+    {
+        cout << "Wrong password!"<<endl;
+        sleep(1);
+        return;
+    }
+    
+    if(state != "ACTIVE")
+    {
+        cout << "You have been banned!"<<endl;
+        sleep(1);
+        return;
+    }
+
+    p2us->Set_id(id);
+    p2us->Set_name(name);
+    p2us->Set_tele(tele);
+    p2us->Set_password(password);
+    p2us->Set_balance(stod(balance));
+    p2us->Set_addr(addr);
+    cout << "Login successfully!"<<endl;
+    sleep(1);
+    User_main();
+
+    return;
 }
 
 void User_main()
@@ -513,6 +534,13 @@ void Personal_change()
                 {
                     string buffer1,buffer2,temp;
                     getline(in,buffer1);// main info except address;
+                    if(buffer1.length() == 0)
+                    {
+                        cout<<endl;
+                        cout << "No User!"<<endl<<endl;
+                        sleep(1);
+                        return;
+                    }
                     getline(in,buffer2);//address
 
                     istringstream is(buffer1);
@@ -564,46 +592,54 @@ void Personal_recharge()
     {
         cout << "Error opening file"<<endl; 
         in.close();
+        return;
     }
-    else
+
+    string all_content;
+    while (!in.eof() )
     {
-        string all_content;
-        while (!in.eof() )
+        string buffer1,buffer2,temp;
+        getline(in,buffer1);// main info except address;
+        if(buffer1.length() == 0)
         {
-            string buffer1,buffer2,temp;
-            getline(in,buffer1);// main info except address;
-            getline(in,buffer2);//address
+            cout<<endl;
+            cout << "No User!"<<endl<<endl;
+            in.close();
+            sleep(1);
+            return;
+        }
+        getline(in,buffer2);//address
 
-            istringstream is(buffer1);
+        istringstream is(buffer1);
 
-            is >> temp;//id
-            if(temp == p2us->Get_id())
-            {
-                all_content += temp;all_content += " ";
-                is >> temp;all_content += temp;all_content += " ";
-                is >> temp;all_content += temp;all_content += " ";
-                is >> temp;all_content += temp;all_content += " ";
-                string long_balance = to_string(p2us->Get_balance());
-                all_content += long_balance.substr(0,long_balance.length() - 5);all_content += " ";
-                all_content += "ACTIVE";all_content += '\n';
-            }
-            else
-            {
-                all_content += buffer1;
-                all_content += '\n';
-            }
-            all_content += buffer2;
+        is >> temp;//id
+        if(temp == p2us->Get_id())
+        {
+            all_content += temp;all_content += " ";
+            is >> temp;all_content += temp;all_content += " ";
+            is >> temp;all_content += temp;all_content += " ";
+            is >> temp;all_content += temp;all_content += " ";
+            string long_balance = to_string(p2us->Get_balance());
+            all_content += long_balance.substr(0,long_balance.length() - 5);all_content += " ";
+            all_content += "ACTIVE";all_content += '\n';
+        }
+        else
+        {
+            all_content += buffer1;
             all_content += '\n';
         }
-       
-        in.close();
-
-        all_content = all_content.substr(0,all_content.length() -1);//delete the last '\n'.
-        ofstream out("user_info.txt");
-        out.flush();
-        out << all_content;
-        out.close();
+        all_content += buffer2;
+        all_content += '\n';
     }
+    
+    in.close();
+
+    all_content = all_content.substr(0,all_content.length() -1);//delete the last '\n'.
+    ofstream out("user_info.txt");
+    out.flush();
+    out << all_content;
+    out.close();
+    
     sleep(1);
 }
 
