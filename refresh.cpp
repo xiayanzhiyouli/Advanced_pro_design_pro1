@@ -433,6 +433,7 @@ bool my_ScanIntention()
 
 void my_RefreshIntention()
 {
+    my_ClearComRemoved();
     while(my_ScanIntention());
 }
 
@@ -573,4 +574,92 @@ void UpdateOrder(intention* p,int cnt)
     out << all_content;
     out.close();
     return;
+}
+
+void my_ClearComRemoved()
+{
+    ifstream in("intention_info.txt");
+    if (!in.is_open())
+    {
+        cout << "Error opening file"<<endl; 
+        in.close();
+        return;
+    }
+
+    string all_content,com_id;
+
+    while (!in.eof() )
+    {
+        string buffer;
+        getline(in,buffer);
+
+        if(buffer.length() == 0)
+        {
+            in.close();
+            return;
+        }
+
+        istringstream is(buffer);
+
+        is >> com_id;
+
+        if(!my_JudgeComRemoved(com_id))
+        {
+            all_content += buffer;
+            all_content += "\n";
+        }  
+    }
+    in.close();
+
+    all_content = all_content.substr(0,all_content.length() -1);//delete the last '\n'.
+    ofstream out("intention_info.txt");
+    out.flush();
+    out << all_content;
+    out.close();
+    return;
+}
+
+bool my_JudgeComRemoved(string& a)
+{
+    ifstream in("commodity_info.txt");
+    if (!in.is_open())
+    {
+        cout << "Error opening file"<<endl; 
+        in.close();
+        return true;
+        //"No Commodity" means all intention need to be deleted.
+    }
+
+
+    while (!in.eof() )
+    {
+        string buffer1,buffer2,buffer3;
+        getline(in,buffer1);
+        if(buffer1.length() == 0)
+        {
+            in.close();
+            return true;
+            //"No Commodity" means all intention need to be deleted.
+        }
+        getline(in,buffer2);
+        getline(in,buffer3);
+        istringstream is(buffer1);
+
+        string temp;
+        is >> temp;//id
+        if(temp == a)
+        {
+            is >> temp; is >> temp; is >> temp;
+            is >> temp; is >> temp;
+            if(temp == "ONAUCTION")
+                return false;
+            else
+                return true;
+            break;
+        }
+    }
+    in.close();
+
+    return true;
+    //"No Commodity" means all intention need to be deleted.
 }

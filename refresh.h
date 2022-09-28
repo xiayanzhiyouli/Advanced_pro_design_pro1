@@ -60,6 +60,12 @@ bool my_ScanIntention();
 //only choose an expired commodity to trade once.
 //return true if find intention for trading, false otherwise.
 
+void my_ClearComRemoved();
+//clear all commodities removed.
+
+bool my_JudgeComRemoved(string& a);
+//return whether a commodity has been removed.
+
 void my_RefreshIntention();
 //refresh the file intention.txt.
 
