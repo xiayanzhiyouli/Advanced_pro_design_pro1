@@ -317,7 +317,9 @@ void Buyer_main()
         cout <<"3 :Search for commodities."<<endl;
         cout <<"4 :Check my order."<<endl;
         cout <<"5 :Check commodity's detailed information."<<endl;
-        cout <<"6 :Exit."<<endl;
+        cout <<"6 :Cancel purchase intention."<<endl;
+        cout <<"7 :Change purchase intention."<<endl;
+        cout <<"8 :Exit."<<endl;
         cout <<"=============================="<<endl;
         string input;
         cout <<"Input the number you want."<<endl;
@@ -344,6 +346,14 @@ void Buyer_main()
             p2us->Buyer_buy_com();        
         }
         else if(input == "6")
+        {
+            p2us->Buyer_cancel_intention();        
+        }
+        else if(input == "7")
+        {
+            p2us->Buyer_change_intention();        
+        }
+        else if(input == "8")
         {
             break;
         }

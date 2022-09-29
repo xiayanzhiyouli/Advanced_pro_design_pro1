@@ -56,6 +56,9 @@ double my_CheckBalance(const string& a);
 int my_CheckComNum(const string& a);
 //chek commodity's num before the trade is done.
 
+double my_CheckComPrice(const string& a);
+//chek commodity's price before the intention is changed.
+
 bool my_ScanIntention();
 //only choose an expired commodity to trade once.
 //return true if find intention for trading, false otherwise.

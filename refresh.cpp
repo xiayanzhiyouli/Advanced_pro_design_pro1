@@ -17,6 +17,12 @@ using namespace std;
 
 extern Time* p2te;
 
+void my_RefreshIntention()
+{
+    my_ClearComRemoved();
+    //while(my_ScanIntention());
+}
+
 bool IntentionSmaller(const intention& a,const intention& b)
 {
     if(a.price < b.price || (a.price == b.price && a.buy_time > b.buy_time))
@@ -311,8 +317,7 @@ int my_CheckComNum(const string& a)
     }
     in.close();
 
-    int test = stoi(res);
-    return test;
+    return stoi(res);
 }
 
 bool my_ScanIntention()
@@ -429,12 +434,6 @@ bool my_ScanIntention()
 
     delete[] p;//am necessity.
     return true;
-}
-
-void my_RefreshIntention()
-{
-    my_ClearComRemoved();
-    while(my_ScanIntention());
 }
 
 void my_ReduceComNum(const string& a, int n)
@@ -662,4 +661,41 @@ bool my_JudgeComRemoved(string& a)
 
     return true;
     //"No Commodity" means all intention need to be deleted.
+}
+
+double my_CheckComPrice(const string& a)
+{
+    string res;
+    ifstream in("commodity_info.txt");
+    if (!in.is_open())
+    {
+        cout << "Error opening file"<<endl;
+        return -1; 
+    }
+        
+    while (!in.eof() )
+    {
+        string buffer1,buffer2,buffer3,temp;
+        getline(in,buffer1);
+        if(buffer1.length() == 0)
+        {
+            in.close();
+            return -1;
+        }
+        getline(in,buffer2);
+        getline(in,buffer3);
+
+        istringstream is(buffer1);
+
+        is >> temp;
+
+        if(temp == a)
+        {
+            is >> res;
+            break;
+        }
+    }
+    in.close();
+
+    return stod(res);
 }

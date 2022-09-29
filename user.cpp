@@ -722,3 +722,221 @@ void User::Buyer_buy_com()
     cout << "You will get commodities if there are enough commodities or your price is higher than others."<<endl;
     cout << "You can delete this before the deadline for this trading."<<endl;
 }
+
+void User::Buyer_cancel_intention()
+{
+    string com_id,all_content;
+    bool find = false;
+    cout<<"Input the commodity number."<<endl;
+    cin >> com_id;
+
+
+    ifstream in("intention_info.txt");
+    if (!in.is_open())
+    {
+        cout << "Error opening file"<<endl; 
+        in.close();
+        return;
+    }
+
+
+    while (!in.eof() )
+    {
+        string buffer,com,id;
+        getline(in,buffer);
+
+        if(buffer.length() == 0)
+        {
+            cout<<endl;
+            cout <<"You do not have such purchase intention or the trading has been finished."<<endl<<endl;
+            in.close();
+            return;
+        }
+
+        istringstream is(buffer);
+
+        is >> com;
+        is >> id;
+
+        if(com == com_id && id == user_id)
+            find = true;
+        else
+        {
+            all_content += buffer;
+            all_content += "\n";
+        }
+    }
+        
+    if(!find)
+    {
+        cout<<endl;
+        cout <<"You do not have such purchase intention or the trading has been finished."<<endl<<endl;
+        in.close();
+        return;
+    }
+
+    in.close();
+    cout << "Do you really want to cancel your purchase intention?"<<endl;
+    cout << "Input 'y' to confirm, otherwise to stop."<<endl;
+    string to_comfirm;
+    cin >> to_comfirm;
+    if(to_comfirm == "Y" || to_comfirm == "y")
+    {
+        all_content = all_content.substr(0,all_content.length() -1);//delete the last '\n'.
+        ofstream out("intention_info.txt");
+        out.flush();
+        out << all_content;
+        out.close();
+
+        cout <<"You have cancelled your purchase intention."<<endl;
+    }
+    else
+        cout << "You have stopped the cancelling operation."<<endl;
+}
+
+void User::Buyer_change_intention()
+{
+    string target_id,com_id,buyer,seller,num,price,buy_time,added_time,all_content;
+    bool find = false;
+    cout<<"Input the commodity number."<<endl;
+    cin >> target_id;
+
+
+    ifstream in("intention_info.txt");
+    if (!in.is_open())
+    {
+        cout << "Error opening file"<<endl; 
+        in.close();
+        return;
+    }
+
+
+    while (!in.eof() )
+    {
+        string buffer;
+        getline(in,buffer);
+
+        if(buffer.length() == 0)
+        {
+            cout<<endl;
+            cout <<"You do not have such purchase intention or the trading has been finished."<<endl<<endl;
+            in.close();
+            return;
+        }
+
+        istringstream is(buffer);
+
+        is >> com_id; is >> buyer; is >> seller; is >> num;
+        is >> price; is >> buy_time; is >> added_time;
+
+        if(target_id == com_id && buyer == user_id)
+        {
+            find = true;
+            break;
+        }
+    }
+        
+    if(!find)
+    {
+        cout<<endl;
+        cout <<"You do not have such purchase intention or the trading has been finished."<<endl<<endl;
+        in.close();
+        return;
+    }
+
+    in.close();
+
+    string to_comfirm;
+    cout <<"Do you want to change the number? 'y' to change, otherwise to keep original number."<<endl;
+    cin >> to_comfirm;
+    if(to_comfirm == "Y" || to_comfirm == "y")
+    {
+        cout << "Input the new num you can want."<<endl;
+        cin >> num;
+    }
+
+    if(my_CheckComNum(target_id) < stoi(num))
+    {
+        cout << "We do not have so many commodities left!"<<endl;
+        cout << "Changing failed!"<<endl;
+        return;
+    }
+
+    cout <<"Do you want to change the price? 'y' to change, otherwise to keep original price."<<endl;
+    cin >> to_comfirm;
+    if(to_comfirm == "Y" || to_comfirm == "y")
+    {
+        cout << "Input the new price you can afford."<<endl;
+        cin >> price;
+    }
+
+    if(my_CheckComPrice(target_id) > stod(price))
+    {
+        cout << "The price your offer must be higher than seller's."<<endl;
+        cout << "Changing failed!"<<endl;
+        return;
+    }
+
+    if(stoi(num) * stod(price) > my_CheckBalance(buyer))
+    {
+        cout << "You can not afford it!"<<endl;
+        cout << "Changing failed!"<<endl;
+        return;
+    }
+    
+    ifstream repeat("intention_info.txt");
+    if (!repeat.is_open())
+    {
+        cout << "Error opening file"<<endl; 
+        repeat.close();
+        return;
+    }
+
+
+    while (!repeat.eof() )
+    {
+        string buffer,re_com_id,re_buyer;
+        getline(repeat,buffer);
+
+        if(buffer.length() == 0)
+        {
+            cout<<endl;
+            cout <<"You do not have such purchase intention or the trading has been finished."<<endl<<endl;
+            repeat.close();
+            return;
+        }
+
+        istringstream is(buffer);
+
+        is >> re_com_id; is >> re_buyer; 
+
+        if(target_id == re_com_id && re_buyer == user_id)
+        {
+            all_content += com_id; all_content += " ";
+            all_content += buyer; all_content += " ";
+            all_content += seller; all_content += " ";
+            all_content += num; all_content += " ";
+            double d_price = stod(price);
+            price = to_string(d_price);
+            price = price.substr(0,price.length() - 5);
+            all_content += price; all_content += " ";
+            all_content += buy_time; all_content += " ";
+            all_content += added_time; all_content += "\n";
+        }
+        else
+        {
+            all_content += buffer;
+            all_content += "\n";
+        }
+    }
+    repeat.close();
+
+    all_content = all_content.substr(0,all_content.length() -1);//delete the last '\n'.
+    ofstream out("intention_info.txt");
+    out.flush();
+    out << all_content;
+    out.close();   
+
+    cout << "Changing succeeded!"<<endl;
+    return;
+}

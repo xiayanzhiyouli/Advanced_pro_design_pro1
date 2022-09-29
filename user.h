@@ -55,6 +55,8 @@ public:
 	void Buyer_check_order();//Only check user's own order.
 	void Buyer_search_com();//Only search commodity on auction.
 	void Buyer_buy_com();//Only buy commodity on auction.
+	void Buyer_cancel_intention();//Only cancel user's own intention.
+	void Buyer_change_intention();//Only change user's own intention.
 	
 	friend ostream& operator << (ostream& os, const User us)
 	{
