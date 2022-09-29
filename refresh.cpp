@@ -20,7 +20,7 @@ extern Time* p2te;
 void my_RefreshIntention()
 {
     my_ClearComRemoved();
-    //while(my_ScanIntention());
+    while(my_ScanIntention());
 }
 
 bool IntentionSmaller(const intention& a,const intention& b)
