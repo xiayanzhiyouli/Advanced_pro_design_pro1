@@ -319,7 +319,8 @@ void Buyer_main()
         cout <<"5 :Check commodity's detailed information."<<endl;
         cout <<"6 :Cancel purchase intention."<<endl;
         cout <<"7 :Change purchase intention."<<endl;
-        cout <<"8 :Exit."<<endl;
+        cout <<"8 :Write comments."<<endl;
+        cout <<"9 :Exit."<<endl;
         cout <<"=============================="<<endl;
         string input;
         cout <<"Input the number you want."<<endl;
@@ -355,6 +356,10 @@ void Buyer_main()
         }
         else if(input == "8")
         {
+            p2us->Buyer_write_comment();        
+        }
+        else if(input == "9")
+        {
             break;
         }
         else 
@@ -378,7 +383,8 @@ void Seller_main()
         cout <<"3 :Change commodities's information."<<endl;
         cout <<"4 :Remove commodity."<<endl;
         cout <<"5 :Check my order."<<endl;
-        cout <<"6 :Exit."<<endl;
+        cout <<"6 :Check commodity's comments."<<endl;
+        cout <<"7 :Exit."<<endl;
         cout <<"=============================="<<endl;
         string input;
         cout <<"Input the number you want."<<endl;
@@ -405,6 +411,10 @@ void Seller_main()
             p2us->Seller_check_order();
         }
         else if(input == "6")
+        {
+            p2us->Seller_check_comment();
+        }
+        else if(input == "7")
         {
             break;
         }

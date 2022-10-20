@@ -50,6 +50,7 @@ public:
 	void Seller_change_com();//Only change user's own commodity.
 	void Seller_remove_com();//Only remove user's own commodity.
 	void Seller_check_order();//Only check user's own order.
+	void Seller_check_comment();//Only check user's own commodities' comments.
 
 	void Buyer_check_com();//Only check commodity on auction.
 	void Buyer_check_order();//Only check user's own order.
@@ -58,6 +59,7 @@ public:
 	void Buyer_buy_com();//Only buy commodity on auction.
 	void Buyer_cancel_intention();//Only cancel user's own intention.
 	void Buyer_change_intention();//Only change user's own intention.
+	void Buyer_write_comment();//Only write comments on commodities they had bought.
 	
 	friend ostream& operator << (ostream& os, const User us)
 	{
@@ -82,4 +84,6 @@ private:
 	double user_balance;
 	enum UserState user_state;
 };
+
+bool CanWrite(string user,string com);
 #endif

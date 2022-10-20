@@ -974,11 +974,11 @@ void User::Buyer_change_intention()
 void User::Buyer_check_com_detailed()
 {
     ifstream in("commodity_info.txt");
+    string target_id;
     if (!in.is_open())
         cout << "Error opening file"<<endl; 
     else
     {
-        string target_id;
         cout << "Please input the id of the commodity you want to check."<<endl;
         cin >> target_id;
         bool find = false;
@@ -1007,10 +1007,204 @@ void User::Buyer_check_com_detailed()
                 cout <<"Description:  "<<buffer3<<endl;
             }   
         }
+        in.close();
+
+        if(find == true)
+        {
+            cout <<"Comments:"<<endl;
+
+            ifstream secondIn("comment_info.txt");
+            if (!secondIn.is_open())
+                cout << "Error opening file"<<endl;
+
+            bool comment_find = false;
+            while (!secondIn.eof() )
+            {
+                string buffer1,buffer2;
+                getline(secondIn,buffer1);//Com_id and buyer_id
+                getline(secondIn,buffer2);//comment
+
+                istringstream secondIs(buffer1);
+                string temp;
+                secondIs >> temp; secondIs >> temp;
+
+                if(temp == target_id)
+                {
+                    cout << buffer2<<endl;
+                    comment_find = true;
+                }
+            }
+            secondIn.close();
+            if(comment_find == false)
+                cout <<"No Comment"<<endl;
+        }
+        
         cout<<"======================================================================================================="<<endl;
         if(find == false)
             cout <<"Fail to find the commodity you want."<<endl;
-        cout<<endl<<endl;
-        in.close();
+        cout<<endl<<endl;       
     }
+}
+
+void User::Seller_check_comment()
+{
+    ifstream in("commodity_info.txt");
+    string target_id;
+    if (!in.is_open())
+        cout << "Error opening file"<<endl; 
+    else
+    {
+        cout << "Please input the id of the commodity you want to check."<<endl;
+        cin >> target_id;
+        bool find = false;
+        cout<<"======================================================================================================="<<endl;
+        while (!in.eof() )
+        {
+            string buffer1,buffer2,buffer3,id,price,num,seller,addedDate,state;
+            getline(in,buffer1);// main info except name and description;
+            getline(in,buffer2);//name
+            getline(in,buffer3);//description 
+
+            istringstream is(buffer1);
+			is >> id;is >> price;is >> num;is >> seller;is >> addedDate;is >> state;
+			
+            p2te->Reset();
+            if(state == "ONAUCTION" && target_id == id && seller == p2us->Get_id())
+            {
+                find = true;
+                cout <<"ID:           "<<id<<endl;
+                cout <<"Name:         "<<buffer2<<endl;
+                cout <<"Price         "<<price<<endl;
+                cout <<"Number:       "<<num<<endl;
+                cout <<"Seller ID:    "<<seller<<endl;
+                cout <<"Added Date:   "<<addedDate<<endl;
+                cout <<"State:        "<<state<<endl;
+                cout <<"Description:  "<<buffer3<<endl;
+            }   
+        }
+        in.close();
+
+        if(find == true)
+        {
+            cout <<"Buyer   Comments:"<<endl;
+
+            ifstream secondIn("comment_info.txt");
+            if (!secondIn.is_open())
+                cout << "Error opening file"<<endl;
+
+            bool comment_find = false;
+            while (!secondIn.eof() )
+            {
+                string buffer1,buffer2;
+                getline(secondIn,buffer1);//Com_id and buyer_id
+                getline(secondIn,buffer2);//comment
+
+                istringstream secondIs(buffer1);
+                string temp1,temp2;
+                secondIs >> temp1; secondIs >> temp2;
+
+                if(temp2 == target_id)
+                {
+                    cout <<temp1<<"    "<< buffer2<<endl;
+                    comment_find = true;
+                }
+            }
+            secondIn.close();
+            if(comment_find == false)
+                cout <<"No Comment."<<endl;
+        }
+        
+        cout<<"======================================================================================================="<<endl;
+        if(find == false)
+            cout <<"Fail to find the commodity you want."<<endl;
+        cout<<endl<<endl;       
+    }
+}
+
+void User::Buyer_write_comment()
+{
+    string target_id;
+    cout <<"Input the ID of the commodity you want to comment."<<endl;
+    cin >> target_id;
+    if(!CanWrite(p2us->Get_id(),target_id))
+    {
+        cout <<"You had not bought this commodity, so you are not authorized to comment on it"<<endl;
+        return;
+    }
+
+
+    ifstream in("comment_info.txt");
+    if (!in.is_open())
+    {
+        cout << "Error opening file"<<endl;
+        return;
+    }
+
+
+    string comment,all_content;
+    cout << "Please input your comment."<<endl;
+    getline(cin,comment);
+    getline(cin,comment);
+
+    string to_comfirm;
+    cout << "Input y to confirm, otherwise to cancel."<<endl;
+    cin >> to_comfirm;
+    if(to_comfirm != "y" && to_comfirm != "Y")
+    {
+        cout <<"You had cancelled it successfully."<<endl;
+        return;
+    }
+
+    cout <<"Comment successfully!"<<endl;
+    while (!in.eof() )
+    {
+        string buffer1,buffer2;
+        getline(in,buffer1);//Com_id and buyer_id
+        getline(in,buffer2);//comment
+
+        if(buffer1.length() == 0)
+            break;
+
+        all_content += buffer1;all_content += '\n';
+        all_content += buffer2;all_content += '\n';
+    }
+    in.close();
+    all_content += p2us->Get_id();all_content += " ";
+    all_content += target_id;all_content += '\n';
+    all_content += comment;
+    
+    ofstream out("comment_info.txt");
+    out.flush();
+    out << all_content;
+    out.close();
+    return;
+}
+
+bool CanWrite(string user,string commodity)
+{
+    ifstream in("order_info.txt");
+    if (!in.is_open())
+    {
+        cout << "Error opening file"<<endl; 
+        return false;
+    }
+
+    bool res = false;
+    while (!in.eof() )
+    {
+        string buffer,id,com,price,num,date,seller,buyer;
+        getline(in,buffer); 
+
+        istringstream is(buffer);
+        is >> id;is >> com;is >> price;is >> num;is >> date;is >> seller;is >> buyer;
+        
+        if(buyer == user && com == commodity)
+        {
+            res = true;
+            break;
+        }   
+    }
+    in.close();
+
+    return res;
 }
