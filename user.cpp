@@ -140,6 +140,15 @@ void User::Seller_release_com()
         all_content += name; all_content += "\n";
         all_content += description;
 
+        cout <<"Do you really want to do this?"<<endl;
+        string to_comfirm;
+        cout <<"Input y to confirm, otherwise to cancel."<<endl;
+        cin >> to_comfirm;
+        if(to_comfirm != "Y" && to_comfirm != "y")
+        {
+            cout <<"You have cancelled it."<<endl;
+            return;
+        }
         ofstream out("commodity_info.txt");
         out.flush();
         out << all_content;
@@ -300,7 +309,7 @@ void User::Seller_change_com()
 
                 if(tar_id == id)
                 {
-                    for(int i = 0;i < 4;++i)
+                    for(int i = 0;i < 5;++i)
                     {
                         all_content += target[i];
                         all_content += " ";
@@ -319,6 +328,15 @@ void User::Seller_change_com()
             reWrite.close();
             all_content = all_content.substr(0,all_content.length() -1);//delete the last '\n'.
             
+            cout <<"Do you really want to do this?"<<endl;
+            string to_comfirm;
+            cout <<"Input y to confirm, otherwise to cancel."<<endl;
+            cin >> to_comfirm;
+            if(to_comfirm != "Y" && to_comfirm != "y")
+            {
+                cout <<"You have cancelled it."<<endl;
+                return;
+            }
             ofstream out("commodity_info.txt");
             out.flush();
             out << all_content;
@@ -484,7 +502,8 @@ void User::Buyer_check_com()
             istringstream is(buffer1);
 			is >> id;is >> price;is >> num;is >> seller;is >> addedDate;is >> state;
 			
-            if(state == "ONAUCTION")
+            p2te->Reset();
+            if(state == "ONAUCTION" && !my_JudgeExpire(addedDate,p2te->GetStrAll()))
             {
                 find = true;
                 Out(10,id);
@@ -567,7 +586,8 @@ void User::Buyer_search_com()
 
             istringstream is(buffer1);
             is >> id;is >> price;is >> num;is >> seller;is >> date;is >> state;
-            if(strstr(buffer2.c_str(),target.c_str()) != NULL && state == "ONAUCTION")
+            p2te->Reset();
+            if(strstr(buffer2.c_str(),target.c_str()) != NULL && state == "ONAUCTION" && !my_JudgeExpire(p2te->GetStrAll(),date))
             {
                 find = true;
                 
@@ -636,6 +656,15 @@ void User::Buyer_buy_com()
         return;
     }
     
+    p2te->Reset();
+    buy_time = p2te->GetStrAll();
+
+    if(my_JudgeExpire(date,buy_time))//expired.
+    {
+        cout << "The commodity you chose is expired now."<<endl;
+        return;
+    }
+
     cout <<"=========================================="<<endl;
     cout <<"ID:          "<<id<<endl;
     cout <<"Name:        "<<name<<endl;
@@ -648,14 +677,6 @@ void User::Buyer_buy_com()
     cout<<endl<<endl;
     in.close();
 
-    p2te->Reset();
-    buy_time = p2te->GetStrAll();
-
-    if(my_JudgeExpire(date,buy_time))//expired.
-    {
-        cout << "The commodity you chose is expired now."<<endl;
-        return;
-    }
 
     cout <<"Input the number you want to buy."<<endl;
     cin >> buy_num;
@@ -680,6 +701,15 @@ void User::Buyer_buy_com()
         return;
     }
 
+    cout <<"Do you really want to do this?"<<endl;
+    string to_comfirm;
+    cout <<"Press y to comfirm, otherwise to cancel."<<endl;
+    cin >> to_comfirm;
+    if(to_comfirm != "Y" && to_comfirm != "y")
+    {
+        cout <<"You have cancelled it!"<<endl;
+        return;
+    }
 
     string res,duetimeStr;
     res = id; res += " ";//commodity id
@@ -939,4 +969,48 @@ void User::Buyer_change_intention()
 
     cout << "Changing succeeded!"<<endl;
     return;
+}
+
+void User::Buyer_check_com_detailed()
+{
+    ifstream in("commodity_info.txt");
+    if (!in.is_open())
+        cout << "Error opening file"<<endl; 
+    else
+    {
+        string target_id;
+        cout << "Please input the id of the commodity you want to check."<<endl;
+        cin >> target_id;
+        bool find = false;
+        cout<<"======================================================================================================="<<endl;
+        while (!in.eof() )
+        {
+            string buffer1,buffer2,buffer3,id,price,num,seller,addedDate,state;
+            getline(in,buffer1);// main info except name and description;
+            getline(in,buffer2);//name
+            getline(in,buffer3);//description 
+
+            istringstream is(buffer1);
+			is >> id;is >> price;is >> num;is >> seller;is >> addedDate;is >> state;
+			
+            p2te->Reset();
+            if(state == "ONAUCTION" && !my_JudgeExpire(addedDate,p2te->GetStrAll()) && target_id == id)
+            {
+                find = true;
+                cout <<"ID:           "<<id<<endl;
+                cout <<"Name:         "<<buffer2<<endl;
+                cout <<"Price         "<<price<<endl;
+                cout <<"Number:       "<<num<<endl;
+                cout <<"Seller ID:    "<<seller<<endl;
+                cout <<"Added Date:   "<<addedDate<<endl;
+                cout <<"State:        "<<state<<endl;
+                cout <<"Description:  "<<buffer3<<endl;
+            }   
+        }
+        cout<<"======================================================================================================="<<endl;
+        if(find == false)
+            cout <<"Fail to find the commodity you want."<<endl;
+        cout<<endl<<endl;
+        in.close();
+    }
 }

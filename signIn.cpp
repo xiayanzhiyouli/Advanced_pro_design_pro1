@@ -343,7 +343,7 @@ void Buyer_main()
         }
         else if(input == "5")
         {
-            p2us->Buyer_buy_com();        
+            p2us->Buyer_check_com_detailed();        
         }
         else if(input == "6")
         {
@@ -425,7 +425,7 @@ void Personal_information()
         system("clear");
         cout <<"======================="<<endl;
         cout <<"1 :Check personal information."<<endl;
-        cout <<"2 :Chage personal information."<<endl;
+        cout <<"2 :Change personal information."<<endl;
         cout <<"3 :Recharge."<<endl;
         cout <<"4 :Exit."<<endl;
         cout <<"======================="<<endl;
@@ -475,19 +475,24 @@ void Personal_change()
         bool success = true;
         cin >> input;
         my_RefreshIntention();
+        string tempName,tempTele,tempPassword,tempAddr;
+        tempName = p2us->Get_name();
+        tempTele = p2us->Get_tele();
+        tempPassword = p2us->Get_password();
+        tempAddr = p2us->Get_addr();
         if(input == "1")
         {
             cout <<"Please input your new name."<<endl;
             string temp;
             cin >> temp;
-            p2us->Set_name(temp);
+            tempName = temp;
         }
         else if(input == "2")
         {
             cout <<"Please input your new tele."<<endl;
             string temp;
             cin >> temp;
-            p2us->Set_tele(temp);
+            tempTele = temp;
         }
         else if(input == "3")
         {
@@ -498,7 +503,7 @@ void Personal_change()
             {
                 cout <<"Please input your new password."<<endl;
                 cin >> temp;
-                p2us->Set_password(temp);
+                tempPassword = temp;
             }
             else
             {
@@ -513,7 +518,7 @@ void Personal_change()
             string temp;
             getline(cin,temp);
             getline(cin,temp);
-            p2us->Set_addr(temp);
+            tempAddr = temp;
         }
         else if(input == "5")
         {
@@ -529,9 +534,6 @@ void Personal_change()
             sleep(1);
         else
         {
-            cout <<"You have change your personal information successfully."<<endl;
-            sleep(1);
-
             ifstream in("user_info.txt");
             if (!in.is_open())
             {
@@ -559,29 +561,46 @@ void Personal_change()
                     if(temp == p2us->Get_id())
                     {
                         all_content += p2us->Get_id();all_content += " ";
-                        all_content += p2us->Get_name();all_content += " ";
-                        all_content += p2us->Get_tele();all_content += " ";
-                        all_content += p2us->Get_password();all_content += " ";
+                        all_content += tempName;all_content += " ";
+                        all_content += tempTele;all_content += " ";
+                        all_content += tempPassword;all_content += " ";
                         string long_balance = to_string(p2us->Get_balance());
                         all_content += long_balance.substr(0,long_balance.length() - 5);all_content += " ";
                         all_content += "ACTIVE";all_content += '\n';
+                        all_content += tempAddr;all_content += '\n';
                     }
                     else
                     {
                         all_content += buffer1;
                         all_content += '\n';
+                        all_content += buffer2;
+                        all_content += '\n';
                     }
-                    all_content += buffer2;
-                    all_content += '\n';
                 }
             
                 in.close();
 
                 all_content = all_content.substr(0,all_content.length() -1);//delete the last '\n'.
+                                
+                cout <<"Do you really want to do this?"<<endl;
+                string to_comfirm;
+                cout <<"Press y to comfirm, otherwise to cancel."<<endl;
+                cin >> to_comfirm;
+                if(to_comfirm != "Y" && to_comfirm != "y")
+                {
+                    cout <<"You have cancelled it!"<<endl;
+                    return;
+                }
                 ofstream out("user_info.txt");
                 out.flush();
                 out << all_content;
                 out.close();
+                p2us->Set_name(tempName);
+                p2us->Set_tele(tempTele);
+                p2us->Set_password(tempPassword);
+                p2us->Set_addr(tempAddr);
+                cout <<"You have change your personal information successfully."<<endl;
+                sleep(1);
             }
         }     
     }   
@@ -592,10 +611,12 @@ void Personal_recharge()
     cout << "Please input the amount of money."<<endl;
     double charge;
     cin >> charge;
+    if(charge <= 0)
+    {
+        cout <<"It must be bigger than 0!"<<endl;
+        return;
+    }
     my_RefreshIntention();
-    p2us->Set_balance(p2us->Get_balance() + charge);
-    cout <<"Charge successfully!"<<endl;
-    cout <<"Your balance is :"<<p2us->Get_balance()<<endl;
 
     ifstream in("user_info.txt");
     if (!in.is_open())
@@ -629,7 +650,7 @@ void Personal_recharge()
             is >> temp;all_content += temp;all_content += " ";
             is >> temp;all_content += temp;all_content += " ";
             is >> temp;all_content += temp;all_content += " ";
-            string long_balance = to_string(p2us->Get_balance());
+            string long_balance = to_string(p2us->Get_balance() + charge);
             all_content += long_balance.substr(0,long_balance.length() - 5);all_content += " ";
             all_content += "ACTIVE";all_content += '\n';
         }
@@ -645,11 +666,25 @@ void Personal_recharge()
     in.close();
 
     all_content = all_content.substr(0,all_content.length() -1);//delete the last '\n'.
+
+    cout <<"Do you really want to do this?"<<endl;
+    string to_comfirm;
+    cout <<"Press y to comfirm, otherwise to cancel."<<endl;
+    cin >> to_comfirm;
+    if(to_comfirm != "Y" && to_comfirm != "y")
+    {
+        cout <<"You have cancelled it!"<<endl;
+        return;
+    }
+
     ofstream out("user_info.txt");
     out.flush();
     out << all_content;
     out.close();
     
+    p2us->Set_balance(p2us->Get_balance() + charge);
+    cout <<"Charge successfully!"<<endl;
+    cout <<"Your balance is :"<<p2us->Get_balance()<<endl;
     sleep(1);
 }
 
