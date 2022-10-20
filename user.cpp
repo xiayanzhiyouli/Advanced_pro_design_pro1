@@ -214,7 +214,7 @@ void User::Seller_change_com()
         cout << "Enter the ID of the commodity you want to change."<<endl;
         string id;
         string target[7];
-        bool find_com = false,removed_com = false;
+        bool find_com = false,removed_com = false,expired_com = false;
         cin >> id;
 
         while (!in.eof() )
@@ -240,8 +240,12 @@ void User::Seller_change_com()
                 target[5] = buffer2;
                 target[6] = buffer3;
                 is >> temp;
+            
                 if(temp == "REMOVED")
                     removed_com = true;
+                p2te->Reset();
+                if(my_JudgeExpire(p2te->GetStrAll(),target[4]))
+                    expired_com = true;
             }
         }
         if(find_com == false)
@@ -252,6 +256,11 @@ void User::Seller_change_com()
         else if(removed_com == true)
         {
             cout << "This commodity has been removed! Please check commodity's ID."<<endl;
+            in.close();
+        }
+        else if(expired_com == true)
+        {
+            cout << "This commodity has been expired! Please check commodity's ID."<<endl;
             in.close();
         }
         else
